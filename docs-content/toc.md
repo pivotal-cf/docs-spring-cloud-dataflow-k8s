@@ -12,5 +12,7 @@
 * [**Developer Guide**](developer-guide.html.md.erb)
     * [Connecting](connecting-scdf-for-kubernetes.html.md.erb)
     * [Creating a Data Pipeline](getting-started-pipeline.html.md.erb)
-    * [Multi-IO Stream Support](multi-io-support.html.md.erb)
     * [Relocating Stream and Task Applications](relocating-ootb-apps.html.md.erb)
+    * [**Pro Features**](pro-features/index.html.md.erb)
+        * [Multi-IO Stream Support](multi-io-support.html.md.erb)
+        * [Container Registry Updates](container-registry-updates.html.md.erb)
