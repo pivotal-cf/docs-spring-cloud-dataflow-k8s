@@ -37,7 +37,7 @@ These variables should contain your login credentials for the registry that stor
     --docker-password=${password}
     ```
 
-<p class="note"><strong>Note</strong>: This secret is mounted by the Data Flow server. If you don't need credentials for relocated images, you must still create this secret with some dummy values.</p>
+<p class="note"><strong>Note:</strong> This secret is mounted by the Data Flow server. If you don't need credentials for relocated images, you must still create this secret with some dummy values.</p>
 
 ## <a id='install-dev-environment'></a> Install on the Development Environment
 
@@ -115,7 +115,7 @@ $ kapp delete -y -a ingress
 
 Before installing SCDF for Kubernetes on the `production` environment, ensure that you have provisioned the database used by the Skipper and Data Flow servers and that you have properly configured the database settings in the Data Flow and Skipper applications' `application.yaml` files.
 
-<p class="note"><strong>Note</strong>: The following example commands pipe output to the <code>kapp</code> utility. If you wish, you can instead pipe the command output to a file for management in accordance with your organization's Kubernetes application deployment procedures.</p>
+<p class="note"><strong>Note:</strong> The following example commands pipe output to the <code>kapp</code> utility. If you wish, you can instead pipe the command output to a file for management in accordance with your organization's Kubernetes application deployment procedures.</p>
 
 To install the `skipper` application, run the following command:
 
