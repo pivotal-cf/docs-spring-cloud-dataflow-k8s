@@ -30,7 +30,7 @@ $ kubectl create secret generic wavefront-api --from-literal=wavefront-api-token
 Next, mount the secret, to make it available for use by the Data Flow server configuration.
 Add the secret mount settings in the `deployment-patch.yaml` file for the Data Flow server application:
 
-```yaml
+```
       containers:
       - name: scdf-server
         volumeMounts:

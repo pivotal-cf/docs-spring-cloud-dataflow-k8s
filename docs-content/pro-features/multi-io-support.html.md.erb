@@ -24,7 +24,7 @@ With the new functional support added to Spring Cloud Stream, as well as configu
 
 For instance, consider a function that has multiple inputs and a single output:
 
-```java
+```
 @Bean
 public BiFunction<String, Long, String> process() {
 
@@ -36,7 +36,7 @@ public BiFunction<String, Long, String> process() {
 
 In this example, you could define the following function bindings:
 
-```java
+```
 spring.cloud.function.defintion: process
 spring.cloud.stream.function.bindings.process-in-0: myInput1
 spring.cloud.stream.function.bindings.process-in-1: myInput2
@@ -55,7 +55,7 @@ You can use any build tool to apply your label to the container image.
 This example assumes that you used the Maven Jib plugin to generate the container image.
 Add the inbound and outbound ports as container image labels, as shown in the following example:
 
-```xml
+```
 <container>
   <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
   <format>Docker</format>

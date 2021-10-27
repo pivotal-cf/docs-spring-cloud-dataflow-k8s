@@ -90,7 +90,7 @@ To replace the image used for the Data Flow server, you must edit:
 
 In both files, locate the `images` section and change the `newName`, `newTag`, and `digest` entries to match your custom image. See the following example.
 
-```yaml
+```
 images:
 - name: springcloud/spring-cloud-dataflow-server # used for Kustomize matching
   newName: registry.example.com/my-project/scdf-pro-server
@@ -119,7 +119,7 @@ To replace the image used for the Composed Task Runner, you must edit:
 
 In both files, change the `spring.cloud.dataflow.task.composedTaskRunnerUri` entry to match your custom image. The value should be prefixed with `docker://`. See the following example.
 
-```yaml
+```
 spring:
   cloud:
     config:
@@ -146,7 +146,7 @@ To replace the image used for the Skipper server, you must edit:
 
 In both files, locate the `images` section and change the `newName`, `newTag`, and `digest` entries to match your custom image. See the following example.
 
-```yaml
+```
 images:
 - name: springcloud/spring-cloud-skipper-server # used for Kustomize matching
   newName: registry.example.com/my-project/spring-cloud-skipper-server
