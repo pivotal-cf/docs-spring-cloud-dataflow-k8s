@@ -19,7 +19,7 @@ If the <%= vars.scdf_registry_name %> that is being used requires authentication
 If the repository that is being used requires authentication, please see the [Maven Configuration](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#configuration-maven) from the documentation.
 <% end %>
 
-<div class="note">The current implementation checks for new <%= vars.scdf_tags %> available above (that is, more recent than) the current default version.
+<div class="note"><strong>Note:</strong> The current implementation checks for new <%= vars.scdf_tags %> available above (that is, more recent than) the current default version.
 
 For instance, if you have an app registered with a version of 2.0.0, all the versions above 2.0.0 are retrieved (if available) and listed in the SCDF Dashboard as available <%= vars.scdf_tags %>.</div>
 
@@ -31,7 +31,7 @@ You can update the registered <%= vars.scdf_images %> from the `Applications` pa
 
 ![Check for updates](images/Applications_Check_Updates.png)
 
-<div class="note">Since this operation involves getting the <%= vars.scdf_tags %> of all the corresponding images, it may take a few seconds to minutes depending on how many applications you have registered.</div>
+<div class="note"><strong>Note:</strong> Since this operation involves getting the <%= vars.scdf_tags %> of all the corresponding images, it may take a few seconds to minutes depending on how many applications you have registered.</div>
 
 Once the updates are available, the corresponding application is updated with the `i` icon to alert that there are new versions available. For instance, in the following screenshot, you can see that the application `filter` has new versions available.
 
