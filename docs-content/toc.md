@@ -1,4 +1,4 @@
-* [**Spring Cloud Data Flow for Kubernetes Documentation**](index.html)
+* [**Version 1.2**](index.html)
     * [Release Notes](release-notes.html.md.erb)
 * [**Configuring**](configuring.html)
     * [Preparing to Install](preparing-to-install-scdf-for-kubernetes.html.md.erb)

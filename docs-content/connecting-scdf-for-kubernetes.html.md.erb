@@ -22,7 +22,7 @@ To access the dashboard:
     NAME           HOSTS                            ADDRESS          PORTS   AGE
     scdf-ingress   data-flow.35.232.203.79.xip.io   35.225.206.207   80      23h
     ```
-
+    
     The value shown for `HOSTS` is the DNS name.
 
 1. Append `/dashboard` to the DNS name obtained in the previous step. In this example, you can access the dashboard by visiting the following URL in your web browser:
@@ -48,9 +48,7 @@ To access the dashboard:
     The value shown for `CLUSTER-IP` is the IP address.
 
 1. If you have not configured the `scdf-server` service to use a `LoadBalancer` type resource, skip to step 3.
-
-    &nbsp;
-
+    
     If the `scdf-server` service uses a `LoadBalancer` resource, append `/dashboard` to the IP address obtained in the previous step. In this example, you can access the dashboard by visiting the following address in your web browser:
 
     ```
@@ -139,9 +137,7 @@ To connect to the server:
     The value shown for `CLUSTER-IP` is the IP address.
 
 1. If you have not configured the `scdf-server` service to use a `LoadBalancer` type resource, skip to step 3.
-
-    &nbsp;
-
+    
     If the `scdf-server` service uses a `LoadBalancer` resource, start the shell and pass the `dataflow.uri` option with a value matching the IP address obtained in the previous step. In this example, you can connect to the server by starting the shell with the following command:
 
     ```

@@ -220,9 +220,7 @@ To add a JDBC driver, perform the following steps:
 1. Create new container images using the updated server JAR files.
 The easiest way to build new container images is to use the [pack](https://buildpacks.io/docs/install-pack/) CLI utility.
 Use a base image that is based on JDK 8.
-
-    &nbsp;
-
+    
     First, create a `registry_prefix` environment variable containing the prefix that you want to use:
 
     ```
@@ -230,9 +228,7 @@ Use a base image that is based on JDK 8.
     ```
 
     Then build the three container images.
-
-    &nbsp;
-
+        
     To build the container image for the `skipper` app, run the following command:
 
     ```
@@ -261,9 +257,7 @@ Use a base image that is based on JDK 8.
     ```
 
 1. Update your Kustomize manifests with the locations of the new images.
-
-    &nbsp;
-
+    
     For the `skipper` application, update the `newName` and `newTag` values in `apps/skipper/kustomize/overlays/production/kustomization.yaml`.
     Update the `digest` field with the new image digest, or remove the `digest` field altogether.
 
