@@ -141,3 +141,5 @@ template_variables:
   uaa: <a href="http://docs.pivotal.io/pivotalcf/adminguide/notifications.html">UAA</a>
   use_global_header: true
   warden_garden: <p class="note"><strong>Note</strong><span>:</span> Pivotal Cloud Foundry versions 1.6 and above no longer use Warden. The platform-independent Garden subsystem replaces its function. This topic is published here to help people who are running older versions of PCF.</p>
+
+scdf_product_full_name: VMware Spring Cloud Data Flow for Kubernetes
