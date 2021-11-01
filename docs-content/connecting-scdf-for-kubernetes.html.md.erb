@@ -105,13 +105,13 @@ You can use the DNS name of the Ingress resource to connect to the SCDF server.
 To connect to the server:
 
 1. Run the following `kubectl` command to determine the DNS name:
-    
+
     ```
     $ kubectl get ingress scdf-ingress
     NAME           HOSTS                            ADDRESS          PORTS   AGE
     scdf-ingress   data-flow.35.232.203.79.xip.io   35.225.206.207   80      23h
     ```
-    
+
     The value shown for `HOSTS` is the DNS name.
     
 1. Start the shell, passing the `dataflow.uri` option with a value matching the DNS name obtained in the previous step. In this example, you can connect to the server by starting the shell with the following command:
