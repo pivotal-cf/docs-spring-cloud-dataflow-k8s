@@ -129,7 +129,7 @@ You must modify database settings for both the `skipper` application and the `da
 The following example uses a secret named `postgresql` with a `postgresql-password` key.
 (You can specify additional keys that are available in the secret, as long as they reference the paths that you specify in the `application.yaml` file.)
 
-```yaml
+```
       containers:
       - name: skipper
         volumeMounts:
@@ -150,7 +150,7 @@ The following example uses a secret named `postgresql` with a `postgresql-passwo
 In the `application.yaml` file, you must edit settings under `spring.datasource`.
 Update the `url`, `username`, `password`, and `driverClassName` values to match your database settings, as shown in the example below.
 
-```yaml
+```
 spring:
 
   ...
@@ -173,7 +173,7 @@ If applying multiple files, ensure that you apply them in the correct order (the
 If you manually initialize the schema for the database, you can disable automatic database initialization for the Skipper and Data Flow server applications.
 Add the following settings to the `application.yaml` files for the applications:
 
-```yaml
+```
 spring:
 
   ...
@@ -197,8 +197,8 @@ To add a JDBC driver, perform the following steps:
 1. Download the server JAR files for Skipper and the Composed Task Runner:
 
     ```
-    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-skipper-server/2.6.1/spring-cloud-skipper-server-2.6.1.jar
-    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dataflow-composed-task-runner/2.7.1/spring-cloud-dataflow-composed-task-runner-2.7.1.jar
+    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-skipper-server/2.7.0/spring-cloud-skipper-server-2.7.0.jar
+    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dataflow-composed-task-runner/2.8.0/spring-cloud-dataflow-composed-task-runner-2.8.0.jar
     ```
 
 1. Within each application directory (the `apps/data-flow` and `apps/skipper` directories), create a directory for the new JDBC driver:
@@ -212,66 +212,60 @@ To add a JDBC driver, perform the following steps:
 1. Add the driver to the downloaded JAR files:
 
     ```
-    $ jar -u0f spring-cloud-skipper-server-2.6.1.jar BOOT-INF/lib/*.jar
-    $ jar -u0f scdf-pro-server-1.1.2.jar BOOT-INF/lib/*.jar
-    $ jar -u0f spring-cloud-dataflow-composed-task-runner-2.7.1.jar BOOT-INF/lib/*.jar
+    $ jar -u0f spring-cloud-skipper-server-2.7.0.jar BOOT-INF/lib/*.jar
+    $ jar -u0f scdf-pro-server-1.3.0.jar BOOT-INF/lib/*.jar
+    $ jar -u0f spring-cloud-dataflow-composed-task-runner-2.8.0.jar BOOT-INF/lib/*.jar
     ```
 
 1. Create new container images using the updated server JAR files.
 The easiest way to build new container images is to use the [pack](https://buildpacks.io/docs/install-pack/) CLI utility.
 Use a base image that is based on JDK 8.
-
-    &nbsp;
-
+    
     First, create a `registry_prefix` environment variable containing the prefix that you want to use:
-
+    
     ```
     $ export registry_prefix=registry.example.com/example
     ```
-
+    
     Then build the three container images.
-
-    &nbsp;
-
+    
     To build the container image for the `skipper` app, run the following command:
-
+    
     ```
     $ pack build --env BP_JVM_VERSION=8 \
-      --path spring-cloud-skipper-server-2.6.1.jar \
+      --path spring-cloud-skipper-server-2.7.9.jar \
       --builder gcr.io/paketo-buildpacks/builder:base \
-      --publish ${registry_prefix}/spring-cloud-skipper-server:2.6.1-jdbc
+      --publish ${registry_prefix}/spring-cloud-skipper-server:2.7.0-jdbc
     ```
-
+    
     To build the container image for the `data-flow` app, run the following command:
     
     ```
     $ pack build --env BP_JVM_VERSION=8 \
-      --path scdf-pro-server-1.1.2.jar \
+      --path scdf-pro-server-1.3.0.jar \
       --builder gcr.io/paketo-buildpacks/builder:base \
-      --publish ${registry_prefix}/scdf-pro-server:1.1.2-jdbc
+      --publish ${registry_prefix}/scdf-pro-server:1.3.0-jdbc
     ```
-
+    
     To build the container image for the `composed-task-runner` app, run the following command:
     
     ```
     $ pack build --env BP_JVM_VERSION=8 \
-      --path spring-cloud-dataflow-composed-task-runner-2.7.1.jar \
+      --path spring-cloud-dataflow-composed-task-runner-2.8.0.jar \
       --builder gcr.io/paketo-buildpacks/builder:base \
-      --publish ${registry_prefix}/spring-cloud-dataflow-composed-task-runner:2.7.1-jdbc
+      --publish ${registry_prefix}/spring-cloud-dataflow-composed-task-runner:2.8.0-jdbc
     ```
 
 1. Update your Kustomize manifests with the locations of the new images.
-
-    &nbsp;
-
+    
     For the `skipper` application, update the `newName` and `newTag` values in `apps/skipper/kustomize/overlays/production/kustomization.yaml`.
     Update the `digest` field with the new image digest, or remove the `digest` field altogether.
-
-    ```bash
+    
+    ```
     images:
     - name: springcloud/spring-cloud-skipper-server  # Used for Kustomize matching
       newName: registry.example.com/example/spring-cloud-skipper-server
-      newTag: 2.6.1-jdbc
+      newTag: 2.7.0-jdbc
     configMapGenerator:
     - name: skipper
       files:
@@ -283,14 +277,14 @@ Use a base image that is based on JDK 8.
     - deployment-patch.yaml
     - service-patch.yaml
     ```
-
+    
     For the `data-flow` application, update the `newName` and `newTag` values in `apps/data-flow/kustomize/overlays/production/kustomization.yaml`. Update the `digest` field with the new image digest, or remove the `digest` field altogether.
-
-    ```bash
+    
+    ```
     images:
     - name: springcloud/spring-cloud-dataflow-server  # Used for Kustomize matching
       newName: registry.example.com/example/scdf-pro-server
-      newTag: 1.1.2-jdbc
+      newTag: 1.3.0-jdbc
       configMapGenerator:
       - name: scdf-server
         files:
@@ -302,12 +296,12 @@ Use a base image that is based on JDK 8.
       - deployment-patch.yaml
       - service-patch.yaml
     ```
-
+    
     For the `composed-task-runner` image, update the `apps/data-flow/kustomize/overlays/production/application.yaml` file.
     Update the `spring.cloud.dataflow.task.composedTaskRunnerUri` entry to match your new image. The value should be prefixed with `docker://`.
     You can provide either a tag or a digest that matches your new image. See the following example:
-
-    ```yaml
+    
+    ```
      spring:
       cloud:
         config:
@@ -318,7 +312,8 @@ Use a base image that is based on JDK 8.
           features:
             schedules-enabled: true
           task:
-            composedTaskRunnerUri: docker://registry.example.com/my-project/spring-cloud-dataflow-composed-task-runner:2.7.1-jdbc
+            composedtaskrunner:
+              uri: docker://registry.example.com/my-project/spring-cloud-dataflow-composed-task-runner:2.8.0-jdbc
 
     ...
     ```
@@ -352,7 +347,7 @@ The configuration must include the following environment variables:
 If the RabbitMQ cluster runs in the same namespace as SCDF for Kubernetes, you can reference the service environment variables provided by Kubernetes.
 If not, replace these references with the actual values.
 
-```yaml
+```
 spring:
   cloud:
     skipper:
@@ -364,7 +359,7 @@ spring:
                 environmentVariables: 'SPRING_CLOUD_CONFIG_ENABLED=false,SPRING_RABBITMQ_HOST=${RABBITMQ_SERVICE_HOST},SPRING_RABBITMQ_PORT=${RABBITMQ_SERVICE_PORT_AMQP},SPRING_RABBITMQ_USERNAME=user,SPRING_RABBITMQ_PASSWORD=${rabbitmq-password}'
 ```
 
-<p class="note">Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
+<p class="note"><strong>Note:</strong> Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
 
 #### <a id='kafka-broker-configuration'></a> Use Kafka as the Message Broker
 
@@ -390,7 +385,7 @@ The configuration must include the following environment variables:
 If the Kafka cluster runs in the same namespace as SCDF for Kubernetes, you can reference the service environment variables provided by Kubernetes.
 If not, replace these references with the actual values.
 
-```yaml
+```
 spring:
   cloud:
     skipper:
@@ -402,7 +397,7 @@ spring:
                 environmentVariables: 'SPRING_CLOUD_CONFIG_ENABLED=false,SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=${KAFKA_SERVICE_HOST}:${KAFKA_SERVICE_PORT},SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=${KAFKA_ZOOKEEPER_SERVICE_HOST}:${KAFKA_ZOOKEEPER_SERVICE_PORT}'
 ```
 
-<p class="note">Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
+<p class="note"><strong>Note:</strong> Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
 
 ### <a id='ingress-resource-configuration'></a> Ingress Resource
 
@@ -415,7 +410,7 @@ Under `spec.rules`, update the `host` entry, providing the DNS name required for
 
 If your DNS name is `data-flow.example.com`, add that DNS name as the host:
 
-```yaml
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -477,7 +472,7 @@ To create the secret and configure the SCDF for Kubernetes server applications t
 
 1. Add the name of the secret to the `application.yaml` file for the Skipper application. This will be used for Spring Cloud Stream applications.
 
-    ```yaml
+    ```
     spring:
       cloud:
         skipper:
@@ -489,11 +484,11 @@ To create the secret and configure the SCDF for Kubernetes server applications t
                     imagePullSecret: scdf-apps-regcred
     ```
 
-    <p class="note">If you want to use the Composed Task Runner (CTR), create a secret that contains the credentials for the appropriate registry (either the Tanzu Net registry, or if you relocated the CTR image, the registry to which you relocated the image).</p>
+    <p class="note"><strong>Note:</strong> If you want to use the Composed Task Runner (CTR), create a secret that contains the credentials for the appropriate registry (either the Tanzu Net registry, or if you relocated the CTR image, the registry to which you relocated the image).</p>
 
 1. Add the name of the secret to the `application.yaml` file for the Data Flow application. This will be used for Spring Cloud Task applications.
 
-    ```yaml
+    ```
     spring:
       cloud:
         dataflow:

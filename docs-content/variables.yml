@@ -1,0 +1,16 @@
+---
+template_variables:
+  api_version: 235
+  gtm_account_id: GTM-MW4LZHR
+
+  scdf_product: K8s
+  scdf_product_full_name: VMware Spring Cloud® Data Flow for Kubernetes
+  scdf_product_short_name: SCDF for Kubernetes
+  scdf_platform: Kubernetes
+  scdf_registry_name: container registry
+  scdf_registry_first: Docker container registry
+  scdf_registry: Docker registry
+  scdf_image: container image
+  scdf_images: container images
+  scdf_tag: tag
+  scdf_tags: tags

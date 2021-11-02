@@ -1,13 +1,13 @@
 ---
-title: Multi-IO Stream Support in VMware Spring Cloud® Data Flow for Kubernetes
+title: Multi-IO Stream Support
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
 Spring Cloud Data Flow OSS currently only supports streaming pipelines built using applications that have a single input and output.
 The SCDF Pro server adds support for creating and deploying streaming pipelines using applications that have multiple inputs and outputs (this is referred to as "multi-IO").
-Spring Cloud Stream includes built-in support for binding multi-IO applications to the messaging system, and VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes) can embed multi-IO applications into a streaming pipeline.
+Spring Cloud Stream includes built-in support for binding multi-IO applications to the messaging system, and <%= vars.scdf_product_full_name %> (<%= vars.scdf_product_short_name %>) can embed multi-IO applications into a streaming pipeline.
 
-This topic describes some highlights of the multi-IO support in SCDF for Kubernetes and answers some frequently-asked questions.
+This topic describes some highlights of the multi-IO support in <%= vars.product_short_name %> and answers some frequently-asked questions.
 
 ## <a id='multi-io-support-Q1'></a> What Are the Multi-IO Features in the SCDF Pro Server?
 
@@ -24,7 +24,7 @@ With the new functional support added to Spring Cloud Stream, as well as configu
 
 For instance, consider a function that has multiple inputs and a single output:
 
-```java
+```
 @Bean
 public BiFunction<String, Long, String> process() {
 
@@ -36,7 +36,7 @@ public BiFunction<String, Long, String> process() {
 
 In this example, you could define the following function bindings:
 
-```java
+```
 spring.cloud.function.defintion: process
 spring.cloud.stream.function.bindings.process-in-0: myInput1
 spring.cloud.stream.function.bindings.process-in-1: myInput2
@@ -44,18 +44,19 @@ spring.cloud.stream.function.bindings.process-out-0: processedOutput
 ```
 
 After defining function bindings as logical names, you can configure the logical names as inbound and outbound ports for your application.
-Create container image labels with the following key / value pairs:
+Create <%= vars.scdf_image %> labels with the following key / value pairs:
 
 ```
 configuration-properties.outbound-ports/processedOutput
 configuration-properties.inbound-ports/myInput1,myInput2
 ```
 
+<% if vars.scdf_product == 'K8s' %>
 You can use any build tool to apply your label to the container image.
-This example assumes that you used the Maven Jib plugin to generate the container image.
-Add the inbound and outbound ports as container image labels, as shown in the following example:
+This example assumes that you used the Maven Jib plugin to generate the <%= vars.scdf_image %>.
+Add the inbound and outbound ports as <%= vars.scdf_image %> labels, as shown in the following example:
 
-```xml
+```
 <container>
   <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
   <format>Docker</format>
@@ -65,10 +66,53 @@ Add the inbound and outbound ports as container image labels, as shown in the fo
   </labels>
 </container>
 ```
+<% end %>
+
+<% if vars.scdf_product == 'TAS' %>
+You can use the Data Flow apps metadata plugin to update the port-mapping into your configuration.
+The file `dataflow-configuration-port-mapping.properties` gets generated based on your inbound/outbound destination configurations.
+
+```
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>
+                  ${project.build.outputDirectory}/META-INF/dataflow-configuration-port-mapping.properties
+                </file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dataflow-apps-metadata-plugin</artifactId>
+        <version>1.0.3</version>
+        <executions>
+          <execution>
+            <id>aggregate-metadata</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>aggregate-metadata</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+```
+<% end %>
 
 After building the application and registering it with SCDF, you can wire this application into a stream.
 
-<p class="note">Ensure that you correctly map the logical names of the function bindings to the inbound and outbound ports. SCDF uses the logical names to wire up the applications in a stream.</p>
+<p class="note"><strong>Note:</strong> Ensure that you correctly map the logical names of the function bindings to the inbound and outbound ports. SCDF uses the logical names to wire up the applications in a stream.</p>
 
 ## <a id='multi-io-support-Q3'></a> Is There a Sample Application Demonstrating Multi-IO Support?
 
@@ -83,12 +127,23 @@ Finally, a sink application logs the output of the KStream processor.
 Begin by registering the sample applications.
 Visit the SCDF App Registry and bulk import the following applications:
 
+<% if vars.scdf_product == 'K8s' %>
 ```
-source.clicks-ingest=docker://springcloudstream/multi-io-sample-http-click-ingest:1.0.0-SNAPSHOT
-source.regions-ingest=docker://springcloudstream/multi-io-sample-http-region-ingest:1.0.0-SNAPSHOT
-processor.clicks-per-region=docker://springcloudstream/multi-io-sample-user-clicks-per-region-processor:1.0.0-SNAPSHOT
-sink.clicks-per-region-logger=docker://springcloudstream/multi-io-sample-log-user-clicks-per-region:1.0.0-SNAPSHOT
+source.clicks-ingest=docker://springcloudstream/multi-io-sample-http-click-ingest:1.2.0-SNAPSHOT
+source.regions-ingest=docker://springcloudstream/multi-io-sample-http-region-ingest:1.2.0-SNAPSHOT
+processor.clicks-per-region=docker://springcloudstream/multi-io-sample-user-clicks-per-region-processor:1.2.0-SNAPSHOT
+sink.clicks-per-region-logger=docker://springcloudstream/multi-io-sample-log-user-clicks-per-region:1.2.0-SNAPSHOT
 ```
+<% end %>
+
+<% if vars.scdf_product == 'TAS' %>
+```
+source.clicks-ingest=maven://org.springframework.cloud.dataflow.samples:http-click-ingest:1.2.0-SNAPSHOT
+source.regions-ingest=maven://org.springframework.cloud.dataflow.samples:http-region-ingest:1.2.0-SNAPSHOT
+processor.clicks-per-region=maven://org.springframework.cloud.dataflow.samples:user-clicks-per-region-processor:1.2.0-SNAPSHOT
+sink.clicks-per-region-logger=maven://org.springframework.cloud.dataflow.samples:log-user-clicks-per-region:1.2.0-SNAPSHOT
+```
+<% end %>
 
 After importing the applications, create a streaming pipeline using the Stream Editor:
 
@@ -102,7 +157,9 @@ clicks-ingest --server.port=9001 || regions-ingest --server.port=9000 || clicks-
 
 `clicks-per-region` is a KStream application that has two inputs and one output.
 
-<p class="note"> To post HTTP events, you may need to either use port forwarding for your pods (if using Minikube) or use the <code>click-ingest</code> and <code>regions-ingest</code> deployments' Service resource endpoints (if available). This example assumes that the sample applications have been deployed on Minikube and that you are using port forwarding for the associated pods.</p>
+<% if vars.scdf_product == 'K8s' %>
+<p class="note"><strong>Note:</strong> To post HTTP events, you may need to either use port forwarding for your pods (if using Minikube) or use the <code>click-ingest</code> and <code>regions-ingest</code> deployments' Service resource endpoints (if available). This example assumes that the sample applications have been deployed on Minikube and that you are using port forwarding for the associated pods.</p>
+<% end %>
 
 Post several HTTP events as user region events:
 
