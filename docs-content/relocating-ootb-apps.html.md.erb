@@ -3,75 +3,85 @@ title: Relocating Spring Cloud Stream and Task Applications
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to relocate select Spring Cloud Stream and Spring Cloud Task applications for use with VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
-This can be useful if the SCDF for Kubernetes server is deployed in an environment without internet access (an "air-gapped" environment).
+This topic describes how to relocate select Spring Cloud Stream and Spring Cloud Task applications.
+This can be useful when the Spring Cloud Data Flow for Kubernetes server is deployed in an air-gapped environment.
 
-The following sections demonstrate the relocation process using three stream applications: the `http` source application, the `split` processor application, and the `log` sink application.
+To use as examples for this topic, we have selected three stream applications: the `http` source app, the `split` processor app and the `log` sink app.
 
-<p class="note"><strong>Important</strong>: You must configure SCDF for Kubernetes with credentials for accessing the registry that will store the relocated images. See <a href="./configuring-installation-values.html#container-registry">Container Registry</a> and <a href="./configuring-installation-values.html#imagePullSecrets">Application ImagePullSecrets</a>.</p>
+<div class="note">Before you can use the relocated images with Spring Cloud Data Flow for Kubernetes, you would need to configure access to the registry where you relocate the images to.</div>
 
-## <a id='install-prel'></a> Install Properties File Image Relocation CLI utility
+Review the following configuration sections: configuring the [Container Registry](configuring-installation-values.html#container-registry), and configuring [ImagePullSecrets for Apps](configuring-installation-values.html#imagePullSecrets)
 
-Image relocation for an air-gapped environment requires an Open Container Initiative (OCI) image layout.
-The following example uses the `prel` command line utility to create this layout.
+## <a id='install-irel'></a> Install Image Relocation CLI utility
 
-You can find the latest `prel` release from the [vmware-tanzu/properties-file-image-relocation](https://github.com/vmware-tanzu/properties-file-image-relocation/releases) repository on GitHub.
-Download the appropriate download for your operating system. Extract the archive file, rename the program file to `prel`, and move it to a directory that is on your `PATH`.
+In order to relocate images we need a utility program that can help us create an OCI image layout that can be moved to an air-gapped environment.
 
-## <a id='create-layout'></a> Create an Archive File containing the OCI Image Layout for Selected Applications
+For this topic we will be using a CLI utility called `imgpkg` that is available from the <a href="https://carvel.dev/imgpkg/">Carvel imgpkg project</a>.
 
-Before creating an OCI image layout for the application images, you must select the applications and versions to relocate.
-In the following example, we use the latest available images for the selected applications (based on the content of the [Stream Apps (RabbitMQ/Docker)](https://dataflow.spring.io/rabbitmq-docker-latest) property file.
+Install the latest `imgpkg` CLI utility release following instructions at <a href="https://carvel.dev/imgpkg/docs/latest/install/">imgpkg install page</a>.
+Select the instructions that match your operating system.
 
-We will relocate the following stream applications:
+## <a id='relocate-images'></a> Relocate the Selected Applications
 
-- `http` source
-- `splitter` processor
-- `log` sink
+Before we relocate the OCI images for the three selected app images we need to select the versions we should relocate.
+We will use the latest available images for the selected apps based on the content of the <a href="https://dataflow.spring.io/rabbitmq-docker-latest">Stream Apps (RabbitMQ/Docker)</a> property file.
 
-We prepare a new `rabbitmq-docker-example.properties` file and add the application type, name, image name and tag for each selected application:
+The images we will relocate are:
 
-```
-source.http=docker:springcloudstream/http-source-rabbit:3.0.0
-processor.splitter=docker:springcloudstream/splitter-processor-rabbit:3.0.0
-sink.log=docker:springcloudstream/log-sink-rabbit:3.0.0
-```
+* source.http=docker:springcloudstream/http-source-rabbit:3.1.1
 
-Next, we package the properties file plus the referenced images in a `.tgz` archive.
+* processor.splitter=docker:springcloudstream/splitter-processor-rabbit:3.1.1
 
-```
-prel package --file rabbitmq-docker-example.properties \
-  --archive rabbitmq-docker-example.tgz
+* sink.log=docker:springcloudstream/log-sink-rabbit:3.1.1
+
+First, define an environment variable for the registry prefix (substitute with the prefix to use for your target registry):
+
+```bash
+export TARGET_REGISTRY_PREFIX=registry.example.com/my-project/apps
 ```
 
-This creates an archive file containing the OCI image layout that can be moved to an air-gapped environment.
+Next, we use `imgpkg copy` to relocate each image.
 
-## <a id='push-images'></a> Push Selected Applications to a Registry
+For `http` source run:
 
-We are now ready to push the images to a new registry.
-
-First, define an environment variable for the registry prefix (substitute with the prefix to use for your target registry ):
-
-```
-export TARGET_REPOSITORY_PREFIX=registry.example.com/my-project/apps
+```bash
+imgpkg copy -i springcloudstream/http-source-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/http-source-rabbit
 ```
 
-Next, relocate the images in the archive containing the OCI image layout.
-This will genetate a new `rabbitmq-docker-example-relocated.properties` file that can be used to import these applications using the relocated images.
+For the `splitter` processor run:
 
+```bash
+imgpkg copy -i springcloudstream/splitter-processor-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/splitter-processor-rabbit
 ```
-prel relocate --repository-prefix $TARGET_REPOSITORY_PREFIX \
-  --archive rabbitmq-docker-example.tgz \
-  --output rabbitmq-docker-example-relocated.properties 
+
+For `log` sink run:
+
+```bash
+imgpkg copy -i springcloudstream/log-sink-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/log-sink-rabbit
 ```
 
 ## <a id='register-stream-apps'></a> Register the Relocated Applications
 
-Finally, you can register the applications with SCDF for Kubernetes, using the the Spring Cloud Data Flow shell.
-For information about connecting to the SCDF for Kubernetes server using the shell, see [Connecting to VMware Spring Cloud® Data Flow for Kubernetes](connecting-scdf-for-kubernetes.html).
+We can now register the apps using the the Spring Cloud Data Flow Shell.
 
+Replace the `registry.example.com/my-project/apps` prefix with the one you used for the relocation.
+
+For `http` source run:
+
+```bash
+dataflow:>app register --name http --type source --uri docker:registry.example.com/my-project/apps/http-source-rabbit:3.1.1
 ```
-dataflow:>app import --uri file:rabbitmq-docker-example-relocated.properties
+
+For the `splitter` processor run:
+
+```bash
+dataflow:>app register --name splitter --type processor --uri docker:registry.example.com/my-project/apps/splitter-processor-rabbit:3.1.1
+```
+
+For `log` sink run:
+
+```bash
+dataflow:>app register --name log --type sink --uri docker:registry.example.com/my-project/apps/log-sink-rabbit:3.1.1
 ```
 
 For more details, see the [Register a Stream Application](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps) section of the [Spring Cloud Data Flow Reference Guide](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).
