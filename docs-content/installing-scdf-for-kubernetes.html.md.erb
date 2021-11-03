@@ -50,6 +50,10 @@ Given an existing Kubernetes cluster, the script automates installation steps fo
 * The Skipper server
 * The Data Flow server
 
+<p class="note"><strong>Note</strong>: This script installs all componets in the namespace that is configured for the current context.
+The only exception are the monitoring config files in the `spring-cloud-data-flow/services/dev/monitoring` directory.
+They are hard coded to install in the `default` namespace and need to be manually changed for installtion in a different namespace.</p>
+
 ### <a id='install-scdf-for-k8s-dev'></a> Install the Spring Cloud Data Flow system
 
 To install the components mentioned above, run the `install-dev.sh` script.
