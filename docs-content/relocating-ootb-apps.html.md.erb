@@ -4,7 +4,6 @@ owner: Spring Cloud Data Flow Release Engineering
 ---
 
 This topic describes how to relocate select Spring Cloud Stream and Spring Cloud Task applications.
-This can be useful when the Spring Cloud Data Flow for Kubernetes server is deployed in an air-gapped environment.
 
 To use as examples for this topic, we have selected three stream applications: the `http` source app, the `split` processor app and the `log` sink app.
 
@@ -13,8 +12,6 @@ To use as examples for this topic, we have selected three stream applications: t
 Review the following configuration sections: configuring the [Container Registry](configuring-installation-values.html#container-registry), and configuring [ImagePullSecrets for Apps](configuring-installation-values.html#imagePullSecrets)
 
 ## <a id='install-irel'></a> Install Image Relocation CLI utility
-
-In order to relocate images we need a utility program that can help us create an OCI image layout that can be moved to an air-gapped environment.
 
 For this topic we will be using a CLI utility called `imgpkg` that is available from the <a href="https://carvel.dev/imgpkg/">Carvel imgpkg project</a>.
 
