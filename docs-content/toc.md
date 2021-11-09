@@ -17,3 +17,4 @@
         * [Multi-IO Stream Support](pro-features/multi-io-support.html.md.erb)
         * [Application Version Updates](pro-features/application-version-updates.html.md.erb)
         * [Task Progress Indicator](pro-features/task-execution-progress.html.md.erb)
+        * [Single-Step Batch Job](pro-features/single-step-batch-job.html.md.erb)
