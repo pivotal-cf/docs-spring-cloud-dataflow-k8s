@@ -3,21 +3,7 @@ title: VMware Spring Cloud® Data Flow for Kubernetes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic provides an overview of VMware Spring Cloud® Data Flow for Kubernetes.
-
-## <a id='about-oss'></a> About Spring Cloud Data Flow
-
-Spring Cloud Data Flow is an open-source toolkit that can deploy streaming and batch data pipelines on Kubernetes (see the [project home page](https://spring.io/projects/spring-cloud-dataflow)). Data pipelines are composed of [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream) or [Spring Cloud Task](https://spring.io/projects/spring-cloud-task) applications. A streaming pipeline DSL makes it easy to specify which apps to deploy and how to connect outputs and inputs. The composed task DSL is useful for when a series of task apps must be run as a directed graph.
-
-Spring Cloud Data Flow provides REST APIs for composing and deploying data pipelines programmatically. It also provides a dashboard that includes a graphical pipeline editor for building new pipelines interactively, as well as views of deployable apps and running apps with metrics using Prometheus, InfluxDB, or other monitoring systems. Spring Cloud Data Flow also includes a shell application for working with the API from the command line.
-
-## <a id='overview'></a> About Spring Cloud Data Flow for Kubernetes
-
-VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes) is based on the Spring Cloud Data Flow open source project.
-SCDF for Kubernetes orchestrates the deployment lifecycle of streaming and batch data pipelines deployed on Kubernetes.
-Data pipelines are composed of Spring Cloud Stream or Spring Cloud Task applications.
-You can use the streaming pipeline DSL and UI to specify which apps to deploy and how to connect outputs and inputs.
-When running a series of task applications as a directed graph, you can use the composed task DSL and UI.
+This topic provides an overview of VMware Spring Cloud® Data Flow for Kubernetes v1.4.
 
 ## <a id='snapshot'></a> Product Snapshot
 
@@ -52,17 +38,6 @@ The table also provides information about the OSS versions used.
       <td>2.9.1</td>
     </tr>
 </table>
-
-## <a id="features"></a> Features
-
-* Operational simplicity for provisioning Spring Cloud Data Flow OSS and other ecosystem projects on Kubernetes
-* Certified container images for Spring Cloud Data Flow Pro, Spring Cloud Skipper, and Composed Task Runner
-* Image-relocation capabilities for air-gapped deployments
-* Support for using the relational databases, message brokers, and identity providers of your choice
-* Easily explore the provisioned software components in a development environment before promoting to production
-
-* Multi-IO stream support for constructing streaming pipelines using applications that have multiple inputs and outputs
-* Container registry updates feature for registered stream and task apps
 
 ## <a id="limitations"></a> Limitations
 
