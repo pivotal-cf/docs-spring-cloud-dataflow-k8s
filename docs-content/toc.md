@@ -5,7 +5,7 @@
     * [Installing Command-Line Tools](installing-command-line-tools.html.md.erb)
     * [Configuring Installation Values](configuring-installation-values.html.md.erb)
     * [Installing](installing-scdf-for-kubernetes.html.md.erb)
-    * [Upgrading](upgrading-scdf-for-kubernetes.html.md.erb)
+    * [Upgrading](updating-scdf-for-kubernetes.html.md.erb)
 * [**Developer Guide**](developer-guide.html.md.erb)
     * [Connecting](connecting-scdf-for-kubernetes.html.md.erb)
     * [Creating a Data Pipeline](getting-started-pipeline.html.md.erb)
