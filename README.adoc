@@ -1,0 +1,165 @@
+= Working on VMware Spring Cloud Data Flow for Kubernetes Documentation
+
+The VMware Spring Cloud Data Flow for Kubernetes documentation is now published on docs.vmware.com. See below for information about how the documentation is stored and published and about the toolchain we now use.
+
+== If You Previously Worked With Bookbinder and Concourse
+
+We no longer use:
+
+* The "book" repository (https://github.com/pivotal-cf/docs-book-scdf-k8s)
+* Bookbinder
+* The Concourse pipeline (https://runway-ci.eng.vmware.com/teams/mapbu-docs/pipelines/cf-services?group=scdf-k8s)
+* The Pivotal Docs staging website (https://docs-pcf-staging.sc2-04-pcf1-apps.oc.vmware.com/scdf-k8s)
+* The Pivotal Docs production website (https://docs.pivotal.io/scdf-k8s)
+
+== Requirements
+
+You will need:
+
+* The docs content repository (https://github.com/pivotal-cf/docs-spring-cloud-dataflow-k8s). Note that this is NOT the "book" repository
+* The Markdown Local Preview CLI utility (if you want to view your changes locally)
+* Access to DocWorks (https://docworks.vmware.com/)
+* Access to the Docs Dashboard (https://docsdash.vmware.com/)
+
+== Workflow
+
+Complete steps:
+
+* **Edit** content files locally
+* **Preview** your changes locally
+* Commit and **push** your changes to GitHub
+* In DocWorks, publish the docs to **staging**
+* **Review** your changes on staging
+* In Docs Dashboard, promote your changes to **pre-production**
+* In Docs Dashboard, **sign off** on your changes in pre-production
+* In Docs Dashboard, promote your changes to **production**
+
+For more information, see the following sections.
+
+=== Editing Content Files
+
+All content files are stored in the content repository on GitHub (https://github.com/pivotal-cf/docs-spring-cloud-dataflow-k8s). Clone this repository.
+
+To edit documentation, check out the relevant branch, make changes locally, preview if desired (see the next section), then commit and push your changes. For example, to edit documentation for Spring Cloud Data Flow version 1.4, check out and commit changes to the `v1.4` branch.
+
+=== Previewing Your Changes Locally
+
+To preview your changes locally, you must install the Markdown Local Preview CLI utility. For more information and the file download link, see https://confluence.eng.vmware.com/pages/viewpage.action?spaceKey=CSOT&title=Using+the+Markdown+Local+Preview+CLI+Utility[Using the Markdown Local Preview CLI Utility] on Confluence.
+
+==== Preparing for Local Previews
+
+After installing the utility, follow these steps to prepare for local previews:
+
+1. From the utility directory (for example, `~/Downloads/VMware.GTIX.MarkdownCLI-osx-x64-1.0-0.markdown-cli-osx/Markdown-Cli/`), run the `Markdown-Cli` utility:
++
+		$ ./Markdown-Cli
+
+1. Select `Build Project (watches for changes)`, then press Enter.
+
+1. Enter the complete path to the docs content repository on your local machine. For example:
++
+		/Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s
+
+1. Type `n`, then press Enter.
+
+1. Press any key.
+
+1. Select `Back`, then press Enter.
+
+1. Select `Exit`, then press Enter.
+
+1. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`. 
+
+1. Set `tocLocation` to `toc.md`.
+
+1. Set `variablesLocation` to `variables.yml`.
+
+==== Previewing Changes
+
+Now you can preview your changes:
+
+1. From the utility directory, run the `Markdown-Cli` utility:
++
+		$ ./Markdown-Cli
+
+1. Select `Build Project (watches for changes)`, then press Enter.
+
+1. Enter the complete path to the docs content repository on your local machine. For example:
++
+		/Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s
+
+1. Type `y`, then press Enter.
+
+1. In a browser, open the `DocsPreview.html` file that the utility generated under a `_md-cli` subdirectory of the content repository directory. The file path will be something like the following:
++
+    /Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s/_md-cli/dist/DocsPreview.html
+
+1. Navigate to the page that you edited.
+
+1. If you make additional changes, the utility will automatically regenerate the preview. You will have to refresh the preview page in your browser, then navigate to your edited page again.
+
+=== Publishing to Staging and Promoting to Pre-Production
+
+To publish your changes on the staging website:
+
+1. Visit DocWorks (https://docworks.vmware.com/).
+
+1. Log in using your VMware LDAP credentials.
+
+1. From the main navigation menu, select **Markdown**.
+
+1. In the left-hand navigation menu, under **Markdown Projects**, click **All**.
+
+1. Search for the docs set (for example, "Spring Cloud Data Flow").
+
+1. Locate the "card" for the docs set and click **Publish**.
++
+NOTE: Depending on the project, you may see **Build** and **Deploy** buttons instead of a **Publish** button. If so, first click **Build**, then when the build has finished, click **Deploy**.
+
+1. If the build fails, click the red bar representing the most recent build and review the logs for any warnings or errors. Resolve any errors and start a new build.
+
+1. When the build succeeds, visit the Docs Dashboard (https://docsdash.vmware.com/).
+
+1. Log in using your VMware LDAP credentials.
+
+1. From the main navigation menu, select **Deployment > Stage**.
+
+1. In the list of deployments, locate the project and click its link in the **Publication** column. This will take you to the staging website, where you can view your changes.
+
+When you are satisfied with your changes on staging:
+
+1. Return to the Docs Dashboard.
+
+1. In the list of deployments, select your project (select the checkbox in the **Product** column).
+
+1. Click the **Deploy Selected to Pre-Prod** button.
+
+1. In the **Deployment Status** dialog, click **Refresh** to update the status of the deployment. When the deployment has succeeded, click **Hide**.
+
+1. From the main navigation menu, select **Deployment > Pre Prod**.
+
+1. In the list of deployments, locate the project and click its link in the **Publication** column. This will take you to the pre-production website, where you can view your changes.
+
+=== Promoting to Production
+
+When you are satisfied with your changes in pre-production:
+
+1. Return to the Docs Dashboard.
+
+1. In the list of deployments, select your project in the **Product** column).
+
+1. Click the **Sign-Off For Release** button.
+
+1. Confirm your sign-off.
+
+1. In the list of deployments, select your project again.
+
+1. Click the **Deploy Selected to Prod** button.
+
+1. Confirm that you want to deploy to production.
+
+1. In the **Deployment Status** dialog, click **Refresh** to update the status of the deployment. When the deployment has succeeded, click **Hide**.
+
+1. From the main navigation menu, select **Deployment > Production**.
+
+1. In the list of deployments, locate the project and click its link in the **Publication** column. This will take you to the production website, where you can view your published changes.
