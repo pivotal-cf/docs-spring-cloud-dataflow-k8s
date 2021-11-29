@@ -67,9 +67,7 @@ After installing the utility, follow these steps to prepare for local previews:
 
 1. Select `Build Project (watches for changes)`, then press Enter.
 
-1. Enter the complete path to the docs content repository on your local machine. For example:
-+
-		{example-content-repository-path}
+1. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
 
 1. Type `n`, then press Enter.
 
@@ -95,15 +93,11 @@ Now you can preview your changes:
 
 1. Select `Build Project (watches for changes)`, then press Enter.
 
-1. Enter the complete path to the docs content repository on your local machine. For example:
-+
-		{example-content-repository-path}
+1. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
 
 1. Type `y`, then press Enter.
 
-1. In a browser, open the `DocsPreview.html` file that the utility generated under a `_md-cli` subdirectory of the content repository directory. The file path will be something like the following:
-+
-    {example-content-repository-path}/_md-cli/dist/DocsPreview.html
+1. In a browser, open the `DocsPreview.html` file that the utility generated under a `_md-cli` subdirectory of the content repository directory. The file path will be something like `{example-content-repository-path}/_md-cli/dist/DocsPreview.html`.
 
 1. Navigate to the page that you edited.
 
