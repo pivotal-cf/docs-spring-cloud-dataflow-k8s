@@ -47,6 +47,10 @@ Complete steps:
 
 For more information, see the following sections.
 
+=== Editing the Navigation Menu
+
+The navigation menu is based on a TOC (table of contents) file. For {product-name-full}, the TOC file is a Markdown file called `toc.md`, stored in the root of the docs project alongside the content files.
+
 === Editing Content Files
 
 All content files are stored in the content repository on GitHub ({content-repository}). Clone this repository.
