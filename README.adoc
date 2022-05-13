@@ -29,8 +29,8 @@ You will need:
 
 * The docs content repository ({content-repository}). Note that this is NOT the "book" repository
 * The Markdown Local Preview CLI utility (if you want to view your changes locally)
-* Access to DocWorks (https://docworks.vmware.com/)
-* Access to the Docs Dashboard (https://docsdash.vmware.com/)
+* Access to DocWorks (https://docworks.vmware.com/). Ask for access in the https://vmware.slack.com/archives/C01GS5414J3[#vmdocs-markdown] Slack channel
+* Access to the Docs Dashboard (https://docsdash.vmware.com/). Ask for access in the https://vmware.slack.com/archives/C01GS5414J3[#vmdocs-markdown] Slack channel
 
 == Workflow
 
