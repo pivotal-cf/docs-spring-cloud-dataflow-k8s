@@ -5,6 +5,23 @@ owner: Spring Cloud Data Flow Release Engineering
 
 This topic contains the release notes for VMware Spring Cloud® Data Flow for Kubernetes version 1.4.
 
+## <a id="1-4-4"></a>v1.4.4
+
+**Release Date: August 18, 2022**
+
+### Features
+
+Features included in this release:
+
+- Upgrades to Spring Boot 2.5.14.
+
+### Fixes
+
+- Fixed a bug that caused `spring.cloud.stream.bindings.output.producer.requiredGroups` to be set in stream configuration even when there was no downstream app ([Stream configuration shouldn't set requiredGroups property when there is no downstream app](https://github.com/pivotal/scdf-pro/issues/102)).
+- Fixed a bug that prevented creation of a stream with `application-type` of `app` (SCDF-47, "Can not create a stream using application-type=app").
+
+For information about additional bug fixes and improvements included in this release, see the [Spring Cloud Data Flow 2.9.5 release] on GitHub.
+
 ## <a id="1-4-3"></a>v1.4.3
 
 **Release Date: April 21, 2022**
