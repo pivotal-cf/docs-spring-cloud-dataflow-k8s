@@ -1,4 +1,4 @@
-* [Version 1.3](index.html)
+* [Version 1.4](index.html)
     * [Release Notes](release-notes.html.md.erb)
 * [Configuring](configuring.html)
     * [Preparing to Install](preparing-to-install-scdf-for-kubernetes.html.md.erb)
@@ -17,3 +17,4 @@
         * [Multi-IO Stream Support](pro-features/multi-io-support.html.md.erb)
         * [Application Version Updates](pro-features/application-version-updates.html.md.erb)
         * [Task Progress Indicator](pro-features/task-execution-progress.html.md.erb)
+        * [Single-Step Batch Job](pro-features/single-step-batch-job.html.md.erb)
