@@ -102,7 +102,7 @@ The `kustomization.yaml` file references the other YAML files in the directory.
 The `overlays` directory contains one subdirectory for each deployment environment: a `dev` subdirectory and a `production` subdirectory.
 Within each subdirectory, a `kustomization.yaml` file references the `kustomization.yaml` file in the `base` directory, and adds additional patches to modify values that are unique to the target deployment environment.
 
-You can set the target namespace to deploy, and add labels and name prefixes, by adding additional configuration fields to the `kustomization.yaml` file. See the [Kustomize documentation](https://kubernetes-sigs.github.io/kustomize/api-reference/kustomization/) for information about the additional fields that are available.
+You can set the target namespace to deploy, and add labels and name prefixes, by adding additional configuration fields to the `kustomization.yaml` file. See the [Kustomize documentation](https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/) for information about the additional fields that are available.
 
 ## <a id='configuration-steps'></a> Configuration Steps
 
