@@ -1,23 +1,25 @@
 ---
-title: Multi-IO Stream Support
+title: Multi-IO stream support
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
+Spring Cloud Stream includes built-in support for binding multi-IO applications to the messaging system, and <%= vars.scdf_product_full_name %> (<%= vars.scdf_product_short_name %>) can embed multi-IO applications into a streaming pipeline.
+Here are some highlights of the multi-IO support in <%= vars.product_short_name %> and answers some frequently-asked questions.
+
 Spring Cloud Data Flow OSS currently only supports streaming pipelines built using applications that have a single input and output.
 The SCDF Pro server adds support for creating and deploying streaming pipelines using applications that have multiple inputs and outputs (this is referred to as "multi-IO").
-Spring Cloud Stream includes built-in support for binding multi-IO applications to the messaging system, and <%= vars.scdf_product_full_name %> (<%= vars.scdf_product_short_name %>) can embed multi-IO applications into a streaming pipeline.
 
-This topic describes some highlights of the multi-IO support in <%= vars.product_short_name %> and answers some frequently-asked questions.
+Here are some highlights of the multi-IO support in <%= vars.product_short_name %> and answers some frequently-asked questions.
 
-## <a id='multi-io-support-Q1'></a> What Are the Multi-IO Features in the SCDF Pro Server?
+## <a id='multi-io-support-Q1'></a> What are the multi-IO features in the SCDF Pro Server?
 
-SCDF Pro adds a number of features to support multi-IO stream applications: 
+SCDF Pro adds a number of features to support multi-IO stream applications:
 
 * A multi-IO stream DSL for constructing streaming pipelines using applications that have multiple inputs and outputs
 * A Stream Flo editor for wiring up multi-IO applications when creating a stream
 * Lifecycle management for multi-IO streams
 
-## <a id='multi-io-support-Q2'></a> How Do Multi-IO Applications Differ From Single-IO Applications?
+## <a id='multi-io-support-Q2'></a> How do multi-IO applications differ From single-IO applications?
 
 SCDF previously included support for registering a stream application that had a single input and output, where the application input and output endpoints had to be configured as the `input` and `output` endpoints using the Spring Cloud Stream `@EnableBinding` annotation.
 With the new functional support added to Spring Cloud Stream, as well as configurable function bindings, you can choose named endpoints for the inbound and outbound bindings of your function.
@@ -114,7 +116,7 @@ After building the application and registering it with SCDF, you can wire this a
 
 <p class="note"><strong>Note:</strong> Ensure that you correctly map the logical names of the function bindings to the inbound and outbound ports. SCDF uses the logical names to wire up the applications in a stream.</p>
 
-## <a id='multi-io-support-Q3'></a> Is There a Sample Application Demonstrating Multi-IO Support?
+## <a id='multi-io-support-Q3'></a> Is there a sample application demonstrating multi-IO support?
 
 You can use a set of ready-made sample applications to see multi-IO support in action.
 Download the sample code from the [spring-cloud/spring-cloud-dataflow-samples](https://github.com/spring-cloud/spring-cloud-dataflow-samples/tree/master/multi-io-samples/kafka-streams/user-clicks-per-region) repository on GitHub.
@@ -206,7 +208,7 @@ You can see the result in the logs of the logger application:
 
 ```
 
-## <a id='multi-io-support-Q4'></a> How Does Multi-IO Support Differ From Adding a Tap to a Stream?
+## <a id='multi-io-support-Q4'></a> How does multi-IO support differ from adding a tap to a stream?
 
 When you tap the output of a streaming application in order to create a parallel pipeline, the tap is added to that output of the application.
 The output acts as a publisher for all pipeline consumers that tap into it, and each of the consumers belongs to a unique consumer group.
@@ -215,7 +217,7 @@ Tapping works only for the output of a stream application.
 With the new multi-IO support, SCDF binds an application that has multiple inputs and outputs.
 Each input or output has its own functional binding, and SCDF maps the functional binding of the application to a destination at the messaging system.
 
-## <a id='multi-io-support-Q5'></a> How Can I Replicate Multi-IO Support in SCDF OSS?
+## <a id='multi-io-support-Q5'></a> How can I replicate multi-IO support in SCDF OSS?
 
 Multi-IO support is currently available only as a feature of the SCDF Pro server and SCDF Pro dashboard.
 To deploy multi-IO streaming applications using SCDF OSS, you must use the `App` type and provide manual configuration for the functional bindings of the individual applications.

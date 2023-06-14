@@ -20,8 +20,8 @@ We no longer use:
 * The "book" repository ({book-repository})
 * Bookbinder
 * The Concourse pipeline ({concourse-pipeline})
-* The Pivotal Docs staging website ({pivotal-staging-website})
-* The Pivotal Docs production website ({pivotal-production-website})
+* The VMware Docs staging website ({https://docs-staging.vmware.com/})
+* The VMware Docs production website ({https://docs-staging.vmware.com/})
 
 == Requirements
 
@@ -81,7 +81,7 @@ After installing the utility, follow these steps to prepare for local previews:
 
 1. Select `Exit`, then press Enter.
 
-1. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`. 
+1. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`.
 
 1. Set `tocLocation` to `toc.md`.
 

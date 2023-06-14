@@ -1,11 +1,11 @@
 ---
-title: Application Version Updates
+title: Application version updates in Spring Cloud Data Flow
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to use the new Pro server feature for managing <%= vars.scdf_image %> versions for stream and task apps used with <%= vars.scdf_product_full_name %> (<%= vars.scdf_product_short_name %>).
+Here you can learn how to use the new Pro server feature for managing <%= vars.scdf_image %> versions for stream and task apps used with <%= vars.scdf_product_full_name %> (<%= vars.scdf_product_short_name %>).
 
-## <a id='new-application-version-alerts'></a> New Application Version Alerts and Continuous Delivery
+## <a id='new-application-version-alerts'></a> New application version alerts and continuous delivery
 
 The SCDF Pro dashboard can register applications by automatically retrieving the available <%= vars.scdf_tags %> from <%= vars.scdf_images %> in the backing <%= vars.scdf_registry %>. With this automation in place, users can update existing Streams with these new versions of the registered applications.
 
@@ -40,7 +40,7 @@ Once the application versions are available, you can either:
 * Register the available version(s) with SCDF by choosing them individually
 * For stream applications, you can update the streams with the new versions of the applications.
 
-### <a id='bulk-stream-updates'></a> Bulk Stream Updates
+### <a id='bulk-stream-updates'></a> Bulk stream updates
 
 The following example shows how to perform a Stream update:
 
@@ -58,9 +58,9 @@ Here you can choose the applications you would like to update and proceed by cli
 
 ![Streams Update Apps Select](images/Stream_Update_Apps_Select.png)
 
-For each selected application, you can see the list of available versions. 
+For each selected application, you can see the list of available versions.
 
-Note that the list of available versions shown here are the net-new versions for the same application. 
+Note that the list of available versions shown here are the net-new versions for the same application.
 
 You can also choose a version to be the `default` version for the application in SCDF’s application registry. Going forward, this new version is used as the default version for stream deployments.
 
@@ -82,7 +82,7 @@ Once the new versions are selected for the applications, you can:
 
 ![Streams Update Result](images/Stream_Update_Result.png)
 
-### <a id='single-stream-update'></a> Single Stream Update
+### <a id='single-stream-update'></a> Single stream update
 
 If you prefer to update a single Stream by **only** choosing the specific versions of the applications associated with that Stream, then you can perform a single Stream update by just setting the application versions as below:
 
@@ -92,7 +92,7 @@ Once the Stream is selected, you can choose the application versions and update:
 
 ![Single Stream Selection Version](images/Single_Stream_Select_Version.png)
 
-### <a id='individual-application-update'></a> Individual Application Update
+### <a id='individual-application-update'></a> Individual application update
 
 You can also update the versions of the individual applications.
 
@@ -104,7 +104,7 @@ Select the ellipsis icon available to the left of the individual application and
 
 ![Applications List Manage Version](images/Applications_List_Manage_Version.png)
 
-You see a form where you can select the latest available versions and mark them to be registered with SCDF. 
+You see a form where you can select the latest available versions and mark them to be registered with SCDF.
 
 Note that you can register multiple versions this way.
 
@@ -119,7 +119,7 @@ You also have an option to mark any of the currently selected versions as the `d
 ![Application Register](images/Application_Register.png)
 
 <% if vars.scdf_product == 'K8s' %>
-### <a id='authentication'></a> Managing Authentication
+### <a id='authentication'></a> Managing authentication
 
 The credentials used in the REST request to connect to the container registry are, by default, obtained from the respective target platform account's `imagePullSecret`.
 
