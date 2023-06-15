@@ -1,9 +1,9 @@
 ---
-title: Installing Command-Line Tools
+title: Installing command-line tools for Spring Cloud Data Flow for Kubernetes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to install the command-line tools that are required to install VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
+Here you will learn how to install the command-line tools that are required to install VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
 
 ## <a id='overview'></a> Overview
 
@@ -20,7 +20,7 @@ For steps to install `kapp`, `kbld`, and `yq`, see the following sections. Follo
 
 <p class="note"><strong>Note</strong>: <code>kapp</code> and <code>kbld</code> are available from <a href="https://network.pivotal.io/products/p-scdf-for-kubernetes">VMware Tanzu Network</a>. Binaries are provided only for 64-bit architectures.</p>
 
-## <a id='installation-instructions'></a> Installation Instructions
+## <a id='installation-instructions'></a> Installation instructions
 
 See the following sections for information about installing the required command-line tools depending on your operating system.
 
@@ -168,9 +168,9 @@ This section describes how to install the `yq` utility on Linux.
     $ mv yq /usr/local/bin/yq
     ```
 
-<!-- restore this section once SCDF for K8s supports a Windows installation procedure
+<!-- restore this section after SCDF for K8s supports a Windows installation procedure
 
-### Windows
+### Microsoft Windows
 
 #### kapp
 
@@ -216,6 +216,6 @@ This section describes how to install the `ytt` utility on Windows.
 
 keep this '<' here or stuff breaks, srsly ->< -->
 
-## <a id='deploying-tas-kubernetes'></a> Next: Configure Installation Values
+## <a id='deploying-tas-kubernetes'></a> Next: Configure installation values
 
-Before installing SCDF for Kubernetes on your Kubernetes cluster, you must configure the installation resources. See [Configuring Installation Values for VMware Spring Cloud® Data Flow for Kubernetes](./configuring-installation-values.html).
+Before installing SCDF for Kubernetes on your Kubernetes cluster, you must configure the installation resources. See [Configuring installation values for VMware Spring Cloud Data Flow for Kubernetes](./configuring-installation-values.html).
