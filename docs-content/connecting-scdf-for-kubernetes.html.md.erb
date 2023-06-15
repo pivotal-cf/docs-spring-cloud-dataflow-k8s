@@ -3,13 +3,13 @@ title: Connecting to VMware Spring Cloud® Data Flow for Kubernetes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes methods of connecting to VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes). You can do this using either the built-in SCDF dashboard or the SCDF shell.
+Here you will learn methods of connecting to VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes). You can do this using either the built-in SCDF dashboard or the SCDF shell.
 
-## <a id='connect-scdf-dashboard'></a> Use the SCDF Dashboard
+## <a id='connect-scdf-dashboard'></a> Using the SCDF dashboard
 
 You can access the SCDF for Kubernetes dashboard in two ways: using the DNS name configured for the Ingress resource (if you installed one), or using the IP address assigned to the Data Flow server Service resource.
 
-### <a id='scdf-dashboard-with-ingress'></a> If You Installed an Ingress Resource
+### <a id='scdf-dashboard-with-ingress'></a> If you installed an ingress resource
 
 You can use the DNS name of the Ingress resource to access the SCDF dashboard.
 
@@ -26,12 +26,12 @@ To access the dashboard:
     The value shown for `HOSTS` is the DNS name.
 
 1. Append `/dashboard` to the DNS name obtained in the previous step. In this example, you can access the dashboard by visiting the following URL in your web browser:
-    
+
     ```
     http://data-flow.35.232.203.79.xip.io/dashboard
     ```
 
-### <a id='scdf-dashboard-without-ingress'></a> If You Did Not Install an Ingress Resource
+### <a id='scdf-dashboard-without-ingress'></a> If you did not install an ingress resource
 
 You can use the Data Flow server Service resource to access the SCDF dashboard.
 
@@ -48,9 +48,9 @@ To access the dashboard:
     The value shown for `CLUSTER-IP` is the IP address.
 
 1. If you have not configured the `scdf-server` service to use a `LoadBalancer` type resource, skip to step 3.
-    
+
     If the `scdf-server` service uses a `LoadBalancer` resource, append `/dashboard` to the IP address obtained in the previous step. In this example, you can access the dashboard by visiting the following address in your web browser:
-    
+
     ```
     http://10.55.253.237/dashboard
     ```
@@ -65,12 +65,12 @@ To access the dashboard:
     ```
 
     You can now access the dashboard by visiting the following address in your web browser:
-    
+
     ```
     http://localhost:8080/dashboard
     ```
 
-## <a id='connecting-scdf-shell'></a> Use the SCDF Shell
+## <a id='connecting-scdf-shell'></a> Using the SCDF shell
 
 To run the Spring Cloud Data Flow shell, you must have the following installed on your local machine:
 
@@ -98,7 +98,7 @@ The following examples assume that the server is not secured and that you can co
 
 You can connect the shell to the SCDF for Kubernetes server in two ways: using the DNS name configured for the Ingress resource (if you installed one), or using the IP address assigned to the Data Flow server Service resource.
 
-### <a id='scdf-shell-with-ingress'></a> If You Installed an Ingress Resource
+### <a id='scdf-shell-with-ingress'></a> If you installed an ingress resource
 
 You can use the DNS name of the Ingress resource to connect to the SCDF server.
 
@@ -115,12 +115,12 @@ To connect to the server:
     The value shown for `HOSTS` is the DNS name.
 
 1. Start the shell, passing the `dataflow.uri` option with a value matching the DNS name obtained in the previous step. In this example, you can connect to the server by starting the shell with the following command:
-    
+
     ```
     $ java -jar spring-cloud-dataflow-shell-2.9.2.jar --dataflow.uri=http://data-flow.35.232.203.79.xip.io
     ```
 
-### <a id='scdf-shell-without-ingress'></a> If You Did Not Install an Ingress Resource
+### <a id='scdf-shell-without-ingress'></a> If you did not install an ingress resource
 
 You can use the Data Flow server Service resource to connect to the SCDF server.
 
@@ -137,9 +137,9 @@ To connect to the server:
     The value shown for `CLUSTER-IP` is the IP address.
 
 1. If you have not configured the `scdf-server` service to use a `LoadBalancer` type resource, skip to step 3.
-    
+
     If the `scdf-server` service uses a `LoadBalancer` resource, start the shell and pass the `dataflow.uri` option with a value matching the IP address obtained in the previous step. In this example, you can connect to the server by starting the shell with the following command:
-    
+
     ```
     $ java -jar spring-cloud-dataflow-shell-2.9.2.jar --dataflow.uri=http://10.55.253.237
     ```
@@ -154,14 +154,14 @@ To connect to the server:
     ```
 
     You can now connect to the server by starting the shell and passing the `dataflow.uri` option with a value of `http://localhost:8080`:
-    
+
     ```
     $ java -jar spring-cloud-dataflow-shell-2.9.2.jar --dataflow.uri=http://localhost:8080
     ```
 
-### <a id='scdf-shell-running-commands'></a> Run Shell Commands
+### <a id='scdf-shell-running-commands'></a> Run shell commands
 
-Once the shell is running, you will see the following command prompt:
+After the shell is running, you will see the following command prompt:
 
 ```
 dataflow:>
@@ -170,6 +170,6 @@ dataflow:>
 You can now issue any of the available commands.
 For a guide to using the shell, see the [Shell](https://docs.spring.io/spring-cloud-dataflow/docs/2.9.2/reference/htmlsingle/#shell) section of the [Spring Cloud Data Flow Reference Guide](https://docs.spring.io/spring-cloud-dataflow/docs/2.9.2/reference/htmlsingle/).
 
-## <a id='next-pipeline'></a> Next: Create a Data Pipeline
+## <a id='next-pipeline'></a> Next: Create a data pipeline
 
-For steps to begin building a data pipeline, see [Creating a Data Pipeline with VMware Spring Cloud® Data Flow for Kubernetes](getting-started-pipeline.html).
+For steps to begin building a data pipeline, see [Creating a data pipeline with VMware Spring Cloud® Data Flow for Kubernetes](getting-started-pipeline.html).

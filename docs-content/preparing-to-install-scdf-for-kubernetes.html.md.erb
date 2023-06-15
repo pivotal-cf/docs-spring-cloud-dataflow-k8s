@@ -1,11 +1,11 @@
 ---
-title: Preparing to Install VMware Spring Cloud® Data Flow for Kubernetes
+title: Preparing to install VMware Spring Cloud® Data Flow for Kubernetes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to prepare dependencies and your local machine for the installation of VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
+Here you will learn how to prepare dependencies and your local machine for the installation of VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
 
-## <a id='downloading-installation-resources'></a> Download and Extract the Installation Resources
+## <a id='downloading-installation-resources'></a> Download and extract the installation resources
 
 To download and extract the SCDF for Kubernetes installation resources, follow the steps below.
 
@@ -21,7 +21,7 @@ To download and extract the SCDF for Kubernetes installation resources, follow t
     $ tar xzvf data-flow-1.4.1.tgz
     ```
 
-## <a id='image-relocation'></a> Relocate Distribution Container Images to Another Registry (Optional)
+## <a id='image-relocation'></a> Relocate distribution container images to another registry (optional)
 
 SCDF for Kubernetes relies on several container images. If you wish, you can re-locate these images to a different container image registry. Supported registries include Harbor, Google Container Registry (GCR), and DockerHub.
 
@@ -44,7 +44,7 @@ To download and relocate the SCDF for Kubernetes installation images, follow the
 1. Use the Docker command-line interface (CLI) tool to authenticate to your registry.
 
 1. Change to the extracted `spring-cloud-data-flow` directory and run the image relocation script.
-    
+
     The script is in the `bin` directory and is named `relocate-image.sh`.
     It takes two arguments: `--app` and `--repository`. Its usage is described below.
 
@@ -75,13 +75,13 @@ To download and relocate the SCDF for Kubernetes installation images, follow the
 
     The relocation script updates the `kustomization.yaml` files to match the new relocated image repository locations.
 
-## <a id='custom-image'></a> Use Custom-Built Images for Data Flow and Skipper Servers (Optional)
+## <a id='custom-image'></a> Use custom-built images for Data Flow and Skipper servers (optional)
 
 If you wish, you can replace the SCDF for Kubernetes container images with your own custom-built images.
 
-In order to use these custom-built images, you must replace image references in some of the configuration files. See the following sections for more information.
+To use these custom-built images, you must replace image references in some of the configuration files. See the following sections for more information.
 
-### Data Flow Server
+### Data Flow server
 
 To replace the image used for the Data Flow server, you must edit:
 
@@ -138,7 +138,7 @@ spring:
 
 You can provide either a tag or a digest that matches your custom image.
 
-### Skipper Server
+### Skipper server
 
 To replace the image used for the Skipper server, you must edit:
 
@@ -167,7 +167,7 @@ patches:
 
 The `digest` must match the digest of your custom image. If you want the image to be pulled by the tag, remove the `digest` line.
 
-## <a id='installing-command-line-tools'></a> Next: Install Command-Line Tools
+## <a id='installing-command-line-tools'></a> Next: Install command-line tools
 
 To install SCDF for Kubernetes, your Linux or macOS machine must have the following command-line tools installed:
 

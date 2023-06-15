@@ -3,21 +3,21 @@ title: Configuring Monitoring for VMware Spring Cloud® Data Flow for Kubernetes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to configure monitoring for VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
+Here you will learn how to configure monitoring for VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes).
 SCDF for Kubernetes can use either [Wavefront](#wavefront-monitoring) or [Prometheus](#prometheus-monitoring).
 
-## <a id='wavefront-monitoring'></a> Configure Monitoring with Wavefront
+## <a id='wavefront-monitoring'></a> Configure monitoring with Wavefront
 
 You can configure SCDF for Kubernetes to send metrics from the Data Flow server application, along with metrics from deployed stream and task applications, to the Wavefront service. For information about using Wavefront with SCDF for Kubernetes, see the following sections.
 
-### <a id='wavefront-account'></a> Wavefront Account
+### <a id='wavefront-account'></a> Wavefront account
 
 To use Wavefront with SCDF for Kubernetes, you must have a Wavefront account.
 You can sign up for an account at the [VMware Tanzu Observability by Wavefront](https://www.wavefront.com) website.
 
 After creating an account, you can generate an API token for your account. To generate the token, visit your Wavefront user profile page and click the **API Access** tab.
 
-### <a id='wavefront-secret'></a> Wavefront API Secret
+### <a id='wavefront-secret'></a> Wavefront API secret
 
 To send metrics to the Wavefront service, you must create a Kubernetes secret containing the API token generated in the previous section. This secret must be created in the namespace where you will install SCDF for Kubernetes.
 
@@ -46,11 +46,11 @@ Add the secret mount settings in the `deployment-patch.yaml` file for the Data F
 
 ```
 
-### <a id='wavefront-enable'></a> Configure Monitoring with Wavefront
+### <a id='wavefront-enable'></a> Configure monitoring with Wavefront
 
 See the following section for an example of the configuration to use when enabling Wavefront for SCDF for Kubernetes applications. After the Data Flow server starts up with this configuration, metrics from the applications will be sent to Wavefront.
 
-#### <a id='wavefront-enable-server'></a> Enable Wavefront for the Data Flow Server and Stream and Task applications
+#### <a id='wavefront-enable-server'></a> Enable Wavefront for the Data Flow Server and stream and task applications
 
 To enable Wavefront for the Data Flow server, edit the `application.yaml` file for the Data Flow application. Add the following configuration:
 
@@ -74,7 +74,7 @@ management:
 In this example configuration, replace the `<YOUR_WAVEFRONT_URI>` and `<YOUR_SOURCE_NAME>` placeholders with the relevant values.
 The value of the `api-token` field will be automatically resolved from the secret.
 
-## <a id='prometheus-monitoring'></a> Configure Monitoring with Prometheus
+## <a id='prometheus-monitoring'></a> Configure monitoring with Prometheus
 
 SCDF supports both short-lived application monitoring and long-lived application monitoring with Prometheus. Spring Cloud Task and Spring Cloud Stream applications deployed by Data Flow and Skipper can use the [Prometheus RSocket Proxy](https://github.com/micrometer-metrics/prometheus-rsocket-proxy).
 
@@ -118,6 +118,6 @@ See the [Spring Cloud Data Flow microsite](https://dataflow.spring.io/) for more
 
 These common application properties are passed to the deployed Spring Cloud Task and Spring Cloud Stream applications. If you are using an alternative monitoring tool that is also supported by Micrometer, you can set the appropriate Spring Boot configuration values for your monitoring infrastructure. Add this configuration to the `applicationProperties.stream` and `applicationProperties.task` sections of the `application.yaml` file for the Data Flow application.
 
-## <a id='next-multi-platform-scdf'></a> Next: Configure Multiple Platforms Support
+## <a id='next-multi-platform-scdf'></a> Next: Configure multiple platforms support
 
 To configure multiple platform support in SCDF for Kubernetes, see [Configuring Multiple Platforms Support for SCDF for Kubernetes](configuring-multi-platform.html).

@@ -3,9 +3,9 @@ title: Creating a Data Pipeline with VMware Spring Cloud® Data Flow for Kuberne
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to get started using VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes) to quickly create a data pipeline.
+Here you will learn how to get started using VMware Spring Cloud® Data Flow for Kubernetes (SCDF for Kubernetes) to quickly create a data pipeline.
 
-## <a id='start-shell'></a> Start the SCDF Shell
+## <a id='start-shell'></a> Start the SCDF shell
 
 First, download and start the SCDF shell. For information about using the shell to connect to the SCDF for Kubernetes server, see [Use the SCDF Shell](./connecting-scdf-for-kubernetes.html#connecting-scdf-shell).
 
@@ -16,7 +16,7 @@ $ java -jar spring-cloud-dataflow-shell-2.9.2.jar --dataflow.uri=http://data-flo
 dataflow:>
 ```
 
-## <a id='import-stream-apps'></a> Import the Stream Applications
+## <a id='import-stream-apps'></a> Import the stream applications
 
 Next, import the Spring Cloud Stream application starters, using the SCDF shell `app import` command.
 You can choose from two versions of the starters, depending on your message broker: "RabbitMQ + Docker", and "Apache Kafka + Docker".
@@ -34,7 +34,7 @@ To use the Apache Kafka starters, run the following command:
 dataflow:>app import https://dataflow.spring.io/kafka-docker-latest
 ```
 
-## <a id='create-stream'></a> Create the Stream Definition
+## <a id='create-stream'></a> Create the stream definition
 
 After importing the application starters, you can use three of the imported applications (the `http` source, the `split` processor, and the `log` sink) to create a stream that consumes data through an HTTP POST request, processes it by splitting it into words, and outputs the results to the log.
 
@@ -44,7 +44,7 @@ Create the stream using the SCDF shell `stream create` command:
 dataflow:>stream create --name words --definition "http | splitter --expression=payload.split(' ') | log"
 ```
 
-## <a id='deploy-stream'></a> Deploy the Stream
+## <a id='deploy-stream'></a> Deploy the stream
 
 Finally, deploy the stream using the SCDF shell `stream deploy` command.
 In order to enable HTTP requests to the `http` application, you must specify a deployment property that requests a `LoadBalancer` for the application service:
@@ -74,7 +74,7 @@ dataflow:>stream list
 ╚═══════════╧═══════════╧═══════════════════════════════════════════════════════╧═════════════════════════════════════════╝
 ```
 
-## <a id='use-pipeline'></a> Use the Deployed Data Pipeline
+## <a id='use-pipeline'></a> Use the deployed data pipeline
 
 To view the log output of the `log` sink, run the following command in a new terminal window or tab:
 
@@ -107,7 +107,7 @@ In the terminal window or tab that is viewing the log output of the `log` sink a
 2020-06-03 19:56:59.255  INFO 1 --- [container-0-C-1] log-sink                                 : test
 ```
 
-## <a id='destroy-pipeline'></a> Destroy the Data Pipeline
+## <a id='destroy-pipeline'></a> Destroy the data pipeline
 
 At the SCDF shell, run the `stream undeploy` command to undeploy the stream:
 
@@ -121,7 +121,7 @@ Then run the `stream destroy` command to destroy the stream definition:
 dataflow:>stream destroy words
 ```
 
-## <a id='learn-more'></a> Learn More About Streams and Tasks
+## <a id='learn-more'></a> Learn more about streams and tasks
 
 To learn more about creating streams, see the [Getting Started with Stream Processing](https://dataflow.spring.io/docs/stream-developer-guides/getting-started/stream/) guide.
 To learn about creating tasks, see the [Getting Started with Task Processing](https://dataflow.spring.io/docs/batch-developer-guides/getting-started/task/) guide.

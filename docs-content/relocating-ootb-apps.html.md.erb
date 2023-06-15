@@ -1,24 +1,24 @@
 ---
-title: Relocating Spring Cloud Stream and Task Applications
+title: Relocating Spring Cloud Stream and Task applications
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-This topic describes how to relocate select Spring Cloud Stream and Spring Cloud Task applications.
+Here you will learn how to relocate select Spring Cloud Stream and Spring Cloud Task applications in Spring Cloud Data Flow for Kubernetes.
 
-To use as examples for this topic, we have selected three stream applications: the `http` source app, the `split` processor app and the `log` sink app.
+Three stream applications are used as examples for this article: the `http` source app, the `split` processor app and the `log` sink app.
 
-<div class="note">Before you can use the relocated images with Spring Cloud Data Flow for Kubernetes, you would need to configure access to the registry where you relocate the images to.</div>
+<div class="note"><strong>Note:</strong> Before you can use the relocated images with Spring Cloud Data Flow for Kubernetes, you must configure access to the registry where you relocate the images to.</div>
 
 Review the following configuration sections: configuring the [Container Registry](configuring-installation-values.html#container-registry), and configuring [ImagePullSecrets for Apps](configuring-installation-values.html#imagePullSecrets)
 
-## <a id='install-irel'></a> Install Image Relocation CLI utility
+## <a id='install-irel'></a> Install image relocation CLI utility
 
 For this topic we will be using a CLI utility called `imgpkg` that is available from the <a href="https://carvel.dev/imgpkg/">Carvel imgpkg project</a>.
 
 Install the latest `imgpkg` CLI utility release following instructions at <a href="https://carvel.dev/imgpkg/docs/latest/install/">imgpkg install page</a>.
 Select the instructions that match your operating system.
 
-## <a id='relocate-images'></a> Relocate the Selected Applications
+## <a id='relocate-images'></a> Relocate the selected applications
 
 Before we relocate the OCI images for the three selected app images we need to select the versions we should relocate.
 We will use the latest available images for the selected apps based on the content of the <a href="https://dataflow.spring.io/rabbitmq-docker-latest">Stream Apps (RabbitMQ/Docker)</a> property file.
@@ -57,7 +57,7 @@ For `log` sink run:
 imgpkg copy -i springcloudstream/log-sink-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/log-sink-rabbit
 ```
 
-## <a id='register-stream-apps'></a> Register the Relocated Applications
+## <a id='register-stream-apps'></a> Register the relocated applications
 
 We can now register the apps using the the Spring Cloud Data Flow Shell.
 
@@ -83,7 +83,7 @@ dataflow:>app register --name log --type sink --uri docker:registry.example.com/
 
 For more details, see the [Register a Stream Application](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps) section of the [Spring Cloud Data Flow Reference Guide](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).
 
-## <a id='relocate-task-apps'></a> Relocate Task Applications
+## <a id='relocate-task-apps'></a> Relocate Task applications
 
 To relocate Spring Cloud Task applications and use them with SCDF for Kubernetes, you can perform the steps described in the previous sections, but registering the applications with the type `task`.
 For more information, see the [Registering a Task Application](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-task-apps) section of the [Spring Cloud Data Flow Reference Guide](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).

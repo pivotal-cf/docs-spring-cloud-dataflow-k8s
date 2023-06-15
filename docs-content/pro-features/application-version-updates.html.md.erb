@@ -9,114 +9,114 @@ Here you can learn how to use the new Pro server feature for managing <%= vars.s
 
 The SCDF Pro dashboard can register applications by automatically retrieving the available <%= vars.scdf_tags %> from <%= vars.scdf_images %> in the backing <%= vars.scdf_registry %>. With this automation in place, users can update existing Streams with these new versions of the registered applications.
 
-Once an application's <%= vars.scdf_image %> is registered in SCDF's application registry, the server retrieves the latest available <%= vars.scdf_tags %> associated with the image by using the <%= vars.scdf_registry %> REST API.
+After an application's <%= vars.scdf_image %> is registered in SCDF's application registry, the server retrieves the latest available <%= vars.scdf_tags %> associated with the image by using the <%= vars.scdf_registry %> REST API.
 
 <% if vars.scdf_product == 'K8s' %>
-If the <%= vars.scdf_registry_name %> that is being used requires authentication, please see the [Managing Authentication](#authentication) section.
+If the <%= vars.scdf_registry_name %> that is being used requires authentication, see the [Managing Authentication](#authentication) section.
 <% end %>
 
 <% if vars.scdf_product == 'TAS' %>
-If the repository that is being used requires authentication, please see the [Maven Configuration](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#configuration-maven) from the documentation.
+If the repository that is being used requires authentication, see the [Maven documentation](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#configuration-maven).
 <% end %>
 
 <p class="note"><strong>Note:</strong> The current implementation checks for new <%= vars.scdf_tags %> available above (that is, more recent than) the current default version. For instance, if you have an app registered with a version of 2.0.0, all the versions above 2.0.0 are retrieved (if available) and listed in the SCDF Dashboard as available <%= vars.scdf_tags %>.</p>
 
-You can update the registered <%= vars.scdf_images %> from the `Applications` page. You can check for:
+You can update the registered <%= vars.scdf_images %> from the **Applications** page. You can check for:
 
 * updates on all the registered applications
 * updates on the applications that are used by the Streams
 * updates on the applications that are used by the Tasks
 
-![Check for updates](images/Applications_Check_Updates.png)
+![alt-text=""](./images/Applications_Check_Updates.png)
 
 <p class="note"><strong>Note:</strong> Since this operation involves getting the <%= vars.scdf_tags %> of all the corresponding images, it may take a few seconds to minutes depending on how many applications you have registered.</p>
 
-Once the updates are available, the corresponding application is updated with the `i` icon to alert that there are new versions available. For instance, in the following screenshot, you can see that the application `filter` has new versions available.
+After the updates are available, the corresponding application is updated with the `i` icon to alert that there are new versions available. For instance, in the following screenshot, you can see that the application `filter` has new versions available.
 
-![Applications List](images/Applications_List.png)
+![alt-text="The updates check is shown in a dialog box."](./images/Applications_List.png)
 
-Once the application versions are available, you can either:
+After the application versions are available, you can either:
 
-* Register the available version(s) with SCDF by choosing them individually
+* Register the available version(s) with SCDF by choosing them individually.
 * For stream applications, you can update the streams with the new versions of the applications.
 
 ### <a id='bulk-stream-updates'></a> Bulk stream updates
 
 The following example shows how to perform a Stream update:
 
-Go to Streams list page:
+Go to **Streams** page to see the list of streams.
 
-![Streams List](images/Streams_List.png)
+![alt-text=""](./images/Streams_List.png)
 
-Click **UPDATE VERSION(S)**
+Click **Update Version(s)**.
 
-After clicking **UPDATE VERSION(S)**, all the applications that are used by the Streams are updated with any of the available versions, and the following form is shown with the list of applications that have new versions available.
+After clicking **Update Version(s)**, all the applications that are used by the Streams are updated with the available versions, and the **Applications** form is shown with the list of applications that have new versions available.
 
-![Streams Update Apps List](images/Stream_Update_Apps_List.png)
+![alt-text=""](./images/Stream_Update_Apps_List.png)
 
-Here you can choose the applications you would like to update and proceed by clicking **NEXT**.
+Here you can choose the applications you would like to update. Proceed by clicking **Next**.
 
-![Streams Update Apps Select](images/Stream_Update_Apps_Select.png)
+![alt-text=""](./images/Stream_Update_Apps_Select.png)
 
 For each selected application, you can see the list of available versions.
 
-Note that the list of available versions shown here are the net-new versions for the same application.
+The available versions shown here are the net-new versions for the same application.
 
-You can also choose a version to be the `default` version for the application in SCDF’s application registry. Going forward, this new version is used as the default version for stream deployments.
+You can also choose a version to be the default version for the application in the SCDF application registry. Going forward, this new version is used as the default version for stream deployments.
 
-![Streams Update Apps Version Select](images/Stream_Update_AppVersionSelect.png)
+![alt-text=""](./images/Stream_Update_AppVersionSelect.png)
 
-You can select the version for all the other applications, as follows:
+You can select the version for all the other applications by selecting the application and the version on the dialog box.
 
-![Streams Update Another App Version Select](images/Stream_Update_AnotherApp_VersionSelect.png)
+![alt-text=""](./images/Stream_Update_AnotherApp_VersionSelect.png)
 
-Once the new versions are selected for the applications, you can:
+After the new versions are selected for the applications, you can:
 
-1. Register the newly selected version of each of the application that is part of the stream
-2. Mark the selected version as the default version (if preferred)
-3. Run the Stream update operation to update the applications’ version to the selected version
+1. Register the newly selected version of each of the application that is part of the stream.
+2. Mark the selected version as the default version (if there is a preferred version).
+3. Run the Stream update operation to update the version for each application to the selected version.
 
-![Streams Update Operations List](images/Stream_Update_Operations_List.png)
+![alt-text=""](./images/Stream_Update_Operations_List.png)
 
-![Streams Update Operations List](images/Stream_Update.png)
+![alt-text=""](./images/Stream_Update.png)
 
-![Streams Update Result](images/Stream_Update_Result.png)
+![alt-text=""](./images/Stream_Update_Result.png)
 
 ### <a id='single-stream-update'></a> Single stream update
 
-If you prefer to update a single Stream by **only** choosing the specific versions of the applications associated with that Stream, then you can perform a single Stream update by just setting the application versions as below:
+If you prefer to update a single stream by choosing only the specific versions of the applications associated with that stream, then you can perform a single stream update by setting the application versions.
 
-![Single Stream Selection](images/Single_Stream_Selection.png)
+![alt-text=""](./images/Single_Stream_Selection.png)
 
-Once the Stream is selected, you can choose the application versions and update:
+After selecting the stream, you can choose the application versions and click **Update the stream**.
 
-![Single Stream Selection Version](images/Single_Stream_Select_Version.png)
+![alt-text=""](./images/Single_Stream_Select_Version.png)
 
 ### <a id='individual-application-update'></a> Individual application update
 
-You can also update the versions of the individual applications.
+You can update the versions of the individual applications.
 
-Go to the **Applications** page:
+Go to the **Applications** page.
 
-![Applications List](images/Applications_List.png)
+![alt-text=""](./images/Applications_List.png)
 
-Select the ellipsis icon available to the left of the individual application and click **Manage Version**, as follows:
+Click the ellipsis icon available to the left of the individual application and click **Manage Version**.
 
-![Applications List Manage Version](images/Applications_List_Manage_Version.png)
+![alt-text=""](./images/Applications_List_Manage_Version.png)
 
 You see a form where you can select the latest available versions and mark them to be registered with SCDF.
 
-Note that you can register multiple versions this way.
+You can register multiple versions this way.
 
-![Application Manage Version](images/Application_Manage_Version.png)
+![alt-text=""](./images/Application_Manage_Version.png)
 
-![Application Manage Version Select](images/Application_Manage_Version_Select.png)
+![alt-text=""](./images/Application_Manage_Version_Select.png)
 
-You also have an option to mark any of the currently selected versions as the `default` version for the application and proceed with the registration, as follows:
+You also have the option to mark any of the currently selected versions as the default version for the application and proceed with the registration.
 
-![Application Make Default](images/Application_MakeDefault.png)
+![alt-text="Click Make Default on the Confirmation dialog box."](./images/Application_MakeDefault.png)
 
-![Application Register](images/Application_Register.png)
+![alt-text="An in-progress dialog box appears."](./images/Application_Register.png)
 
 <% if vars.scdf_product == 'K8s' %>
 ### <a id='authentication'></a> Managing authentication
@@ -125,5 +125,5 @@ The credentials used in the REST request to connect to the container registry ar
 
 If you have already configured the `imagePullSecret` (of type `.dockerconfigjson` for the container registry) to SCDF and Skipper deployment accounts, as documented in [SCDF installation documentation](../configuring-installation-values.html#imagePullSecrets),the same secret is used to connect to the container registry to retrieve the latest tags of the registered applications.
 
-If you use container images from multiple container registries (apart from the one configured through the default `imagePullSecret`), you can add the container registry credentials to SCDF's container registry configure. For more information, see the [open-source Spring Cloud Data Flow documentation](https://dataflow.spring.io/docs/applications/application-metadata/#metadata-container-image-label).
+If you use container images from multiple container registries (apart from the one configured through the default `imagePullSecret`), you can add the container registry credentials to SCDF's container registry configuration. For more information, see the [open-source Spring Cloud Data Flow documentation](https://dataflow.spring.io/docs/applications/application-metadata/#metadata-container-image-label).
 <% end %>
