@@ -1,4 +1,6 @@
-* [Version 1.4](index.html)
+# VMware Spring Cloud Data Flow for Kubernetes
+
+* [Version 1.6](index.html)
     * [Release Notes](release-notes.html.md.erb)
 * [Configuring](configuring.html)
     * [Preparing to Install](preparing-to-install-scdf-for-kubernetes.html.md.erb)

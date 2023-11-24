@@ -1,33 +1,32 @@
-:product-name-full: VMware Spring Cloud Data Flow for Kubernetes
-:product-name-short: Spring Cloud Data Flow
-:example-version: 1.4
-:example-version-branch: v1.4
-:book-repository: https://github.com/pivotal-cf/docs-book-scdf-k8s
-:content-repository: https://github.com/pivotal-cf/docs-spring-cloud-dataflow-k8s
-:concourse-pipeline: https://runway-ci.eng.vmware.com/teams/mapbu-docs/pipelines/cf-services?group=scdf-k8s
-:pivotal-staging-website: https://docs-pcf-staging.sc2-04-pcf1-apps.oc.vmware.com/scdf-k8s
-:pivotal-production-website: https://docs.pivotal.io/scdf-k8s
-:example-content-repository-path: /Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s
+= Working on VMware Spring Cloud Data Flow for Kubernetes Documentation
 
-= Working on {product-name-full} Documentation
+The VMware Spring Cloud Data Flow for Kubernetes documentation is now published on docs.vmware.com. See below for information about how the documentation is stored and published and about the toolchain we now use.
 
-The {product-name-full} documentation is now published on docs.vmware.com. See below for information about how the documentation is stored and published and about the toolchain we now use.
+**Branches and versions
+
+| Branch | Status         | URL |
+|--------|----------------|-----|
+| master | in development | https://docs-staging.vmware.com/en/draft/VMware-Tanzu-Application-Service/6.0/tas-for-vms/metric-registrar-using.html |
+| v1.5   | published      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.5/scdf-k8s/GUID-index.html |
+| v1.4   | published      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.4/scdf-k8s/GUID-index.html |
+| v1.3   | EOGS           | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.3/scdf-k8s/GUID-index.html |
+| v1.2   | EOGS           | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.2/scdf-k8s/GUID-index.html |
 
 == If You Previously Worked With Bookbinder and Concourse
 
 We no longer use:
 
-* The "book" repository ({book-repository})
+* The "book" repository (https://github.com/pivotal-cf/docs-book-scdf-k8s)
 * Bookbinder
-* The Concourse pipeline ({concourse-pipeline})
-* The Pivotal Docs staging website ({pivotal-staging-website})
-* The Pivotal Docs production website ({pivotal-production-website})
+* The Concourse pipeline (https://runway-ci.eng.vmware.com/teams/mapbu-docs/pipelines/cf-services?group=scdf-k8s)
+* The Pivotal Docs staging website (https://docs-pcf-staging.sc2-04-pcf1-apps.oc.vmware.com/scdf-k8s)
+* The Pivotal Docs production website (https://docs.pivotal.io/scdf-k8s)
 
 == Requirements
 
 You will need:
 
-* The docs content repository ({content-repository}). Note that this is NOT the "book" repository
+* The docs content repository (https://github.com/pivotal-cf/docs-spring-cloud-dataflow-k8s). Note that this is NOT the "book" repository
 * The Markdown Local Preview CLI utility (if you want to view your changes locally)
 * Access to DocWorks (https://docworks.vmware.com/). Ask for access in the https://vmware.slack.com/archives/C01GS5414J3[#vmdocs-markdown] Slack channel
 * Access to the Docs Dashboard (https://docsdash.vmware.com/). Ask for access in the https://vmware.slack.com/archives/C01GS5414J3[#vmdocs-markdown] Slack channel
@@ -47,15 +46,11 @@ Complete steps:
 
 For more information, see the following sections.
 
-=== Editing the Navigation Menu
-
-The navigation menu is based on a TOC (table of contents) file. For {product-name-full}, the TOC file is a Markdown file called `toc.md`, stored in the root of the docs project alongside the content files.
-
 === Editing Content Files
 
-All content files are stored in the content repository on GitHub ({content-repository}). Clone this repository.
+All content files are stored in the content repository on GitHub (https://github.com/pivotal-cf/docs-spring-cloud-dataflow-k8s). Clone this repository.
 
-To edit documentation, check out the relevant branch, make changes locally, preview if desired (see the next section), then commit and push your changes. For example, to edit documentation for Spring Cloud Data Flow version {example-version}, check out and commit changes to the `{example-version-branch}` branch.
+To edit documentation, check out the relevant branch, make changes locally, preview if desired (see the next section), then commit and push your changes. For example, to edit documentation for Spring Cloud Data Flow version 1.4, check out and commit changes to the `v1.4` branch.
 
 === Previewing Your Changes Locally
 
@@ -71,21 +66,23 @@ After installing the utility, follow these steps to prepare for local previews:
 
 1. Select `Build Project (watches for changes)`, then press Enter.
 
-1. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
+2. Enter the complete path to the docs content repository on your local machine. For example:
++
+		/Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s
 
 1. Type `n`, then press Enter.
 
-1. Press any key.
+2. Press any key.
 
-1. Select `Back`, then press Enter.
+3. Select `Back`, then press Enter.
 
-1. Select `Exit`, then press Enter.
+4. Select `Exit`, then press Enter.
 
-1. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`. 
+5. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`. 
 
-1. Set `tocLocation` to `toc.md`.
+6. Set `tocLocation` to `toc.md`.
 
-1. Set `variablesLocation` to `variables.yml`.
+7. Set `variablesLocation` to `variables.yml`.
 
 ==== Previewing Changes
 
@@ -97,11 +94,15 @@ Now you can preview your changes:
 
 1. Select `Build Project (watches for changes)`, then press Enter.
 
-1. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
+1. Enter the complete path to the docs content repository on your local machine. For example:
++
+		/Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s
 
 1. Type `y`, then press Enter.
 
-1. In a browser, open the `DocsPreview.html` file that the utility generated under a `_md-cli` subdirectory of the content repository directory. The file path will be something like `{example-content-repository-path}/_md-cli/dist/DocsPreview.html`.
+1. In a browser, open the `DocsPreview.html` file that the utility generated under a `_md-cli` subdirectory of the content repository directory. The file path will be something like the following:
++
+    /Users/bobcratchit/Work/docs-spring-cloud-dataflow-k8s/_md-cli/dist/DocsPreview.html
 
 1. Navigate to the page that you edited.
 
@@ -119,7 +120,7 @@ To publish your changes on the staging website:
 
 1. In the left-hand navigation menu, under **Markdown Projects**, click **All**.
 
-1. Search for the docs set (for example, "{product-name-short}").
+1. Search for the docs set (for example, "Spring Cloud Data Flow").
 
 1. Locate the "card" for the docs set and click **Publish**.
 +
