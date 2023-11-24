@@ -2,7 +2,7 @@
 
 The VMware Spring Cloud Data Flow for Kubernetes documentation is now published on docs.vmware.com. See below for information about how the documentation is stored and published and about the toolchain we now use.
 
-**Branches and versions
+**Branches and versions**
 
 | Branch | Status         | URL |
 |--------|----------------|-----|
