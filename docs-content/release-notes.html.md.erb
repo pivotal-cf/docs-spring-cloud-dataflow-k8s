@@ -3,29 +3,49 @@ title: VMware Spring Cloud® Data Flow for Kubernetes release notes
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-Here are the release notes for VMware Spring Cloud® Data Flow for Kubernetes version 1.5.
+Here are the release notes for VMware Spring Cloud® Data Flow for Kubernetes version 1.6.
 
-## <a id="1-5-3"></a>v1.5.3
+## <a id="1-6-1"></a>v1.6.1
 
-**Release Date: March 8, 2023**
+**Release Date: January 22, 2024**
 
-### Features and improvements
+### Notable changes in 1.6.1
 
-Included in this release:
+#### Spring Batch 5.x support
 
-- Upgraded Spring Boot to version 2.7.11, addressing multiple CVEs.
-- Numerous other bug fixes and improvements. For information about these changes, see [Spring Cloud Data Flow 2.10.3](https://github.com/spring-cloud/spring-cloud-dataflow/releases/tag/v2.10.3) on GitHub.
+* Fixed bugs related to Batch 5.x support.
+* Addressed CVEs reported.
 
-## <a id="1-5-2"></a>v1.5.2
+### Changes / fixes
 
-**Release Date: March 15, 2023**
+* References to `registry.pivotal.io` changes to `registry.tanzu.vmware.com`
+* Update logback to handle CVE-2023-6378
+* CF Deployer needs to use LogCacheClient to retrieve logs
+* Creating Schedule of Task prevents version property
+* Task Execution Log doesn't scroll horizontally
+* Unable to sort tasks by Schema Target
+* Update to Spring Cloud 2021.0.9
+* Update Spring Boot 2.7.18
 
-### Features
+### Dependent projects and compatibility
 
-Features included in this release:
+| Component                               |  Version |
+|:----------------------------------------|---------:|
+| Spring Cloud Dataflow Pro Server Build  |  `1.6.1` |  
+| Spring Cloud Dataflow Pro UI            |  `1.6.1` | 
+| Spring Cloud Dataflow Build             | `2.11.2` |
+| Spring Cloud Dataflow Common            | `2.11.2` |
+| Spring Cloud Deployer                   |  `2.9.2` |  
+| Spring Cloud Deployer Local             |  `2.9.2` |  
+| Spring Cloud Deployer CF                |  `2.9.2` |  
+| Spring Cloud Deployer K8S               |  `2.9.2` |  
+| Spring Cloud Common Security Config     | `2.11.2` | 
+| Spring Cloud Skipper                    | `2.11.2` | 
+| Spring Cloud Dataflow UI                |  `3.4.2` |  
+| Spring Cloud Dataflow                   | `2.11.2` | 
 
-- Upgraded Spring Boot to version 2.7.9.
-- Upgraded Spring Cloud to version 2021.0.6.
-- Upgraded Spring Framework to version 5.3.25.
-- Added ability to fully configure [Pod](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#_pod_security_context) and [container](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#_container_security_context) security contexts.
-- Container security context is now propagated to init container and additional containers.
+### Installer
+
+To find scripts for installing the Carvel package on Kubernetes and local development, see the [SCDF Pro v1.6.1 release](https://github.com/pivotal/scdf-pro/releases/tag/v1.6.1) on GitHub.
+
+You can use the same scripts to install the OSS version. 
