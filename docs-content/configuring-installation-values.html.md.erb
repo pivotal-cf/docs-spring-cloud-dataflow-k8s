@@ -195,7 +195,7 @@ To add a JDBC driver, perform the following steps:
 1. Download the server JAR files for Skipper and the Composed Task Runner:
 
     ```
-    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-skipper-server/2.8.2/spring-cloud-skipper-server-2.8.2.jar
+    $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-skipper-server/2.11.2/spring-cloud-skipper-server-2.11.2.jar
     $ wget https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dataflow-composed-task-runner/2.11.2/spring-cloud-dataflow-composed-task-runner-2.11.2.jar
     ```
 
@@ -210,8 +210,8 @@ To add a JDBC driver, perform the following steps:
 1. Add the driver to the downloaded JAR files:
 
     ```
-    $ jar -u0f spring-cloud-skipper-server-2.8.2.jar BOOT-INF/lib/*.jar
-    $ jar -u0f scdf-pro-server-1.4.2.jar BOOT-INF/lib/*.jar
+    $ jar -u0f spring-cloud-skipper-server-2.11.2.jar BOOT-INF/lib/*.jar
+    $ jar -u0f scdf-pro-server-1.6.1.jar BOOT-INF/lib/*.jar
     $ jar -u0f spring-cloud-dataflow-composed-task-runner-2.11.2.jar BOOT-INF/lib/*.jar
     ```
 
@@ -231,18 +231,18 @@ Use a base image that is based on JDK 8.
 
     ```
     $ pack build --env BP_JVM_VERSION=8 \
-      --path spring-cloud-skipper-server-2.8.2.jar \
+      --path spring-cloud-skipper-server-2.11.2.jar \
       --builder gcr.io/paketo-buildpacks/builder:base \
-      --publish ${registry_prefix}/spring-cloud-skipper-server:2.8.2-jdbc
+      --publish ${registry_prefix}/spring-cloud-skipper-server:2.11.2-jdbc
     ```
 
     To build the container image for the `data-flow` app, run the following command:
 
     ```
     $ pack build --env BP_JVM_VERSION=8 \
-      --path scdf-pro-server-1.4.2.jar \
+      --path scdf-pro-server-1.6.1.jar \
       --builder gcr.io/paketo-buildpacks/builder:base \
-      --publish ${registry_prefix}/scdf-pro-server:1.4.2-jdbc
+      --publish ${registry_prefix}/scdf-pro-server:1.6.1-jdbc
     ```
 
     To build the container image for the `composed-task-runner` app, run the following command:
@@ -263,7 +263,7 @@ Use a base image that is based on JDK 8.
     images:
     - name: springcloud/spring-cloud-skipper-server  # Used for Kustomize matching
       newName: registry.example.com/example/spring-cloud-skipper-server
-      newTag: 2.8.2-jdbc
+      newTag: 2.11.2-jdbc
     configMapGenerator:
     - name: skipper
       files:
@@ -282,7 +282,7 @@ Use a base image that is based on JDK 8.
     images:
     - name: springcloud/spring-cloud-dataflow-server  # Used for Kustomize matching
       newName: registry.example.com/example/scdf-pro-server
-      newTag: 1.4.2-jdbc
+      newTag: 1.6.1-jdbc
       configMapGenerator:
       - name: scdf-server
         files:

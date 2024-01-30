@@ -25,11 +25,11 @@ We will use the latest available images for the selected apps based on the conte
 
 The images we will relocate are:
 
-* source.http=docker:springcloudstream/http-source-rabbit:3.1.1
+* source.http=docker:springcloudstream/http-source-rabbit:4.0.0
 
-* processor.splitter=docker:springcloudstream/splitter-processor-rabbit:3.1.1
+* processor.splitter=docker:springcloudstream/splitter-processor-rabbit:4.0.0
 
-* sink.log=docker:springcloudstream/log-sink-rabbit:3.1.1
+* sink.log=docker:springcloudstream/log-sink-rabbit:4.0.0
 
 First, define an environment variable for the registry prefix (substitute with the prefix to use for your target registry):
 
@@ -42,19 +42,19 @@ Next, we use `imgpkg copy` to relocate each image.
 For `http` source run:
 
 ```bash
-imgpkg copy -i springcloudstream/http-source-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/http-source-rabbit
+imgpkg copy -i springcloudstream/http-source-rabbit:4.0.0 --to-repo ${TARGET_REGISTRY_PREFIX}/http-source-rabbit
 ```
 
 For the `splitter` processor run:
 
 ```bash
-imgpkg copy -i springcloudstream/splitter-processor-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/splitter-processor-rabbit
+imgpkg copy -i springcloudstream/splitter-processor-rabbit:4.0.0 --to-repo ${TARGET_REGISTRY_PREFIX}/splitter-processor-rabbit
 ```
 
 For `log` sink run:
 
 ```bash
-imgpkg copy -i springcloudstream/log-sink-rabbit:3.1.1 --to-repo ${TARGET_REGISTRY_PREFIX}/log-sink-rabbit
+imgpkg copy -i springcloudstream/log-sink-rabbit:4.0.0 --to-repo ${TARGET_REGISTRY_PREFIX}/log-sink-rabbit
 ```
 
 ## <a id='register-stream-apps'></a> Register the relocated applications
@@ -66,19 +66,19 @@ Replace the `registry.example.com/my-project/apps` prefix with the one you used 
 For `http` source run:
 
 ```bash
-dataflow:>app register --name http --type source --uri docker:registry.example.com/my-project/apps/http-source-rabbit:3.1.1
+dataflow:>app register --name http --type source --uri docker:registry.example.com/my-project/apps/http-source-rabbit:4.0.0
 ```
 
 For the `splitter` processor run:
 
 ```bash
-dataflow:>app register --name splitter --type processor --uri docker:registry.example.com/my-project/apps/splitter-processor-rabbit:3.1.1
+dataflow:>app register --name splitter --type processor --uri docker:registry.example.com/my-project/apps/splitter-processor-rabbit:4.0.0
 ```
 
 For `log` sink run:
 
 ```bash
-dataflow:>app register --name log --type sink --uri docker:registry.example.com/my-project/apps/log-sink-rabbit:3.1.1
+dataflow:>app register --name log --type sink --uri docker:registry.example.com/my-project/apps/log-sink-rabbit:4.0.0
 ```
 
 For more details, see the [Register a Stream Application](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps) section of the [Spring Cloud Data Flow Reference Guide](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).
