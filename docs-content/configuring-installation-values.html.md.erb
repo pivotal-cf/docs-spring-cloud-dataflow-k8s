@@ -79,11 +79,13 @@ The contents of the directory are shown below.
 └── overlays
     ├── dev
     │   ├── application.yaml
+    │   ├── application-database.yaml
     │   ├── deployment-patch.yaml
     │   ├── kustomization.yaml
     │   └── service-patch.yaml
     └── production
         ├── application.yaml
+        ├── application-database.yaml
         ├── deployment-patch.yaml
         ├── kustomization.yaml
         └── service-patch.yaml
@@ -114,7 +116,7 @@ For information about how to configure specific settings, see the following sect
 
 ### <a id='database-configuration'></a> Database configuration
 
-You can customize database configuration settings in the `application.yaml` and `deployment-patch.yaml` files.
+You can customize database configuration settings in the `application-database.yaml` files.
 These files are preconfigured to connect to a PostgreSQL database, which can be installed either by using the manifests provided in `services/dev/postgresql` or by installing the `bitnami/postgresql` Helm chart.
 
 #### <a id='database-connection'></a> Database connections settings
@@ -150,9 +152,6 @@ Update the `url`, `username`, `password`, and `driverClassName` values to match 
 
 ```
 spring:
-
-  ...
-
   datasource:
     url: jdbc:postgresql://database-host:5432/dataflow-db
     username: postgres
