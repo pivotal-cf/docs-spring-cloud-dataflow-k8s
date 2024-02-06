@@ -106,8 +106,8 @@ You can set the target namespace to deploy, and add labels and name prefixes, by
 
 ## <a id='configuration-steps'></a> Configuration steps
 
-Within each environment-specific subdirectory in the `overlays` directory, the `application.yaml` file is a Spring Boot configuration file that you can edit to configure application (the Data Flow server or Skipper server).
-For example, you can edit `application.yaml` to configure `spring.datasource` properties or `spring.cloud.dataflow.features` properties.
+Within each environment-specific subdirectory in the `overlays` directory, the `application.yaml` and `application-database.yaml` files is a Spring Boot configuration file that you can edit to configure the application (the Data Flow server or Skipper server).
+For example, you can edit `application.yaml` and `application-database.yaml` to configure `spring.datasource` properties or `spring.cloud.dataflow.features` properties.
 
 Also within each environment-specific subdirectory, the `deployment-patch.yaml` and `service-patch.yaml` files are used to patch the `base` Kubernetes resource files, substituting values that are appropriate for the specific environment.
 For example, you might configure memory or CPU allocations and ingress configuration using one set of values for your `dev` environment and another for your `production` environment.
