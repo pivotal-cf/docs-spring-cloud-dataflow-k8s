@@ -51,8 +51,9 @@ Given an existing Kubernetes cluster, the script automates installation steps fo
 * The Data Flow server
 
 <p class="note"><strong>Note</strong>: This script installs all componets in the namespace that is configured for the current context.
-The only exception are the monitoring config files in the `spring-cloud-data-flow/services/dev/monitoring` directory.
-They are hard coded to install in the `default` namespace and need to be manually changed for installtion in a different namespace.</p>
+We suggest looking at <a src="https://github.com/spring-cloud/spring-cloud-dataflow/blob/main/src/deploy/carvel/deploy-local-prometheus.sh">spring-cloud-dataflow/src/deploy/carvel/deploy-local-prometheus.sh</a> for the commands to deploy a local Prometheus, Grafana and prometheus-rsocket-proxy.
+In production the Prometheus should an operator built by Bitnami or the Prometheus team.
+</p>
 
 ### <a id='install-scdf-for-k8s-dev'></a> Install the Spring Cloud Data Flow system
 
@@ -67,7 +68,6 @@ Install for development help
 Usage: ./bin/install-dev.sh [-d|--database <arg>] [-b|--broker <arg>] [-h|--help]
 	-d, --database: The database to use -- postgresql (default) or mysql
 	-b, --broker: The message broker to use -- rabbitmq (default) or kafka
-	-m, --monitoring: The monitoring solution to install and enable -- none (default) or prometheus
 	-o, --output-dir: The output directory for writing the config files that can be applied later
 	-h, --help: Prints help
 ```
@@ -78,7 +78,7 @@ To override these defaults simply provide the option flag with the alternate cho
 As an example, to install with MySQL, Kafka and Prometheus/Grafana enabled use the following command:
 
 ```
-$ ./bin/install-dev.sh --database mysql --broker kafka --monitoring prometheus
+$ ./bin/install-dev.sh --database mysql --broker kafka
 ```
 
 ### <a id='install-ingress-dev'></a> Install Ingress resource for the Development Environment
@@ -91,7 +91,7 @@ $ kubectl kustomize ./apps/ingress/kustomize/overlays/dev/ | kapp deploy -y -a i
 
 ### <a id='access-grafana-dev'></a> Accessing Grafana Dashboard for the Development Environment
 
-If you enabled monitoring for Prometheus and Grafana, then you can use port-forwarding to access the Grafana dashboard from youtr local browser.
+If you enabled monitoring for Prometheus and Grafana, then you can use port-forwarding to access the Grafana dashboard from your local browser.
 
 Run the following command:
 
