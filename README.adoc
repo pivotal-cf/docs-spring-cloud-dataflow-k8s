@@ -15,14 +15,14 @@ The {product-name-full} documentation is now published on docs.vmware.com. See b
 
 **Branches and versions**
 
-| Branch | Status         | URL |
-|--------|----------------|-----|
-| master |                |     |
-| v1.6   | in development | https://docs-staging.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.6/scdf-k8s/GUID-index.html |
-| v1.5   | published      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.5/scdf-k8s/GUID-index.html |
-| v1.4   | published      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.4/scdf-k8s/GUID-index.html |
-| v1.3   | EOGS           | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.3/scdf-k8s/GUID-index.html |
-| v1.2   | EOGS           | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.2/scdf-k8s/GUID-index.html |
+| Branch | Status    | URL |
+|--------|-----------|-----|
+| master |           |     |
+| v1.6   | published | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.6/scdf-k8s/GUID-index.html |
+| v1.5   | published | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.5/scdf-k8s/GUID-index.html |
+| v1.4   | EOGS      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.4/scdf-k8s/GUID-index.html |
+| v1.3   | EOGS      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.3/scdf-k8s/GUID-index.html |
+| v1.2   | EOGS      | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.2/scdf-k8s/GUID-index.html |
 
 == If You Previously Worked With Bookbinder and Concourse
 
@@ -82,21 +82,21 @@ After installing the utility, follow these steps to prepare for local previews:
 
 1. Select `Build Project (watches for changes)`, then press Enter.
 
-1. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
+2. Enter the complete path to the docs content repository on your local machine. For example, `{example-content-repository-path}`.
 
-1. Type `n`, then press Enter.
+3. Type `n`, then press Enter.
 
-1. Press any key.
+4. Press any key.
 
-1. Select `Back`, then press Enter.
+5. Select `Back`, then press Enter.
 
-1. Select `Exit`, then press Enter.
+6. Select `Exit`, then press Enter.
 
-1. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`.
+7. In your IDE or text editor, open the newly-generated file `_md-cli/dist/config.json`.
 
-1. Set `tocLocation` to `toc.md`.
+8. Set `tocLocation` to `toc.md`.
 
-1. Set `variablesLocation` to `variables.yml`.
+9. Set `variablesLocation` to `variables.yml`.
 
 ==== Previewing Changes
 
