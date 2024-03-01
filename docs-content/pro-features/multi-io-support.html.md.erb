@@ -114,7 +114,9 @@ The file `dataflow-configuration-port-mapping.properties` gets generated based o
 
 After building the application and registering it with SCDF, you can wire this application into a stream.
 
-<p class="note"><strong>Note:</strong> Ensure that you correctly map the logical names of the function bindings to the inbound and outbound ports. SCDF uses the logical names to wire up the applications in a stream.</p>
+<p class="note">
+<span class="note__title">Note</span>
+Ensure that you correctly map the logical names of the function bindings to the inbound and outbound ports. SCDF uses the logical names to wire up the applications in a stream.</p>
 
 ## <a id='multi-io-support-Q3'></a> Is there a sample application demonstrating multi-IO support?
 
@@ -160,7 +162,9 @@ clicks-ingest --server.port=9001 || regions-ingest --server.port=9000 || clicks-
 `clicks-per-region` is a KStream application that has two inputs and one output.
 
 <% if vars.scdf_product == 'K8s' %>
-<p class="note"><strong>Note:</strong> To post HTTP events, you may need to either use port forwarding for your pods (if using Minikube) or use the <code>click-ingest</code> and <code>regions-ingest</code> deployments' Service resource endpoints (if available). This example assumes that the sample applications have been deployed on Minikube and that you are using port forwarding for the associated pods.</p>
+<p class="note">
+<span class="note__title">Note</span>
+To post HTTP events, you may need to either use port forwarding for your pods (if using Minikube) or use the <code>click-ingest</code> and <code>regions-ingest</code> deployments' Service resource endpoints (if available). This example assumes that the sample applications have been deployed on Minikube and that you are using port forwarding for the associated pods.</p>
 <% end %>
 
 Post several HTTP events as user region events:
