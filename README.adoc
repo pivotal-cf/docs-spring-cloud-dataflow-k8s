@@ -25,11 +25,11 @@ The {product-name-full} documentation is now published on docs.vmware.com. See b
 
 | v1.5   | published  | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.5/scdf-k8s/GUID-index.html |
 
-| v1.4   | published  | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.4/scdf-k8s.pdf |
+| v1.4   | archived   | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.4/scdf-k8s.pdf |
 
-| v1.3   | published  | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.3/scdf-k8s.pdf |
+| v1.3   | archived   | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.3/scdf-k8s.pdf |
 
-| v1.2   | published  | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.2/scdf-k8s.pdf |
+| v1.2   | archived   | https://docs.vmware.com/en/VMware-Spring-Cloud-Data-Flow-for-Kubernetes/1.2/scdf-k8s.pdf |
 
 == If You Previously Worked With Bookbinder and Concourse
 
