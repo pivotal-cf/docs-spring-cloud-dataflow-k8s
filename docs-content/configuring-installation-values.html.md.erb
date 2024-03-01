@@ -358,7 +358,9 @@ spring:
                 environmentVariables: 'SPRING_CLOUD_CONFIG_ENABLED=false,SPRING_RABBITMQ_HOST=${RABBITMQ_SERVICE_HOST},SPRING_RABBITMQ_PORT=${RABBITMQ_SERVICE_PORT_AMQP},SPRING_RABBITMQ_USERNAME=user,SPRING_RABBITMQ_PASSWORD=${rabbitmq-password}'
 ```
 
-<p class="note"><strong>Note:</strong> Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
+<p class="note">
+<span class="note__title">Note</span>
+Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
 
 #### <a id='kafka-broker-configuration'></a> Use Kafka as the message broker
 
@@ -396,7 +398,9 @@ spring:
                 environmentVariables: 'SPRING_CLOUD_CONFIG_ENABLED=false,SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=${KAFKA_SERVICE_HOST}:${KAFKA_SERVICE_PORT},SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=${KAFKA_ZOOKEEPER_SERVICE_HOST}:${KAFKA_ZOOKEEPER_SERVICE_PORT}'
 ```
 
-<p class="note"><strong>Note:</strong> Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
+<p class="note">
+<span class="note__title">Note</span>
+Setting <code>SPRING_CLOUD_CONFIG_ENABLED</code> to <code>false</code> prevents Spring Cloud Stream applications from attempting to discover a Spring Cloud Config server instance.</p>
 
 ### <a id='ingress-resource-configuration'></a> Ingress resource
 
@@ -483,7 +487,8 @@ To create the secret and configure the SCDF for Kubernetes server applications t
                     imagePullSecret: scdf-apps-regcred
     ```
 
-    <p class="note"><strong>Note:</strong> If you want to use the Composed Task Runner (CTR), create a secret that contains the credentials for the appropriate registry (either the Tanzu Net registry, or if you relocated the CTR image, the registry to which you relocated the image).</p>
+    <p class="note">
+<span class="note__title">Note</span>If you want to use the Composed Task Runner (CTR), create a secret that contains the credentials for the appropriate registry (either the Tanzu Net registry, or if you relocated the CTR image, the registry to which you relocated the image).</p>
 
 1. Add the name of the secret to the `application.yaml` file for the Data Flow application. This will be used for Spring Cloud Task applications.
 
