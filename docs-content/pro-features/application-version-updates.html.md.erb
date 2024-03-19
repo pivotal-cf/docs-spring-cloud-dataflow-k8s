@@ -29,7 +29,7 @@ You can update the registered <%= vars.scdf_images %> from the **Applications** 
 * updates on the applications that are used by the Streams
 * updates on the applications that are used by the Tasks
 
-![alt-text=""](./images/Applications_Check_Updates.png)
+![Check updates dialog box: buttons are Check updates and Cancel.](./images/Applications_Check_Updates.png)
 
 <p class="note">
 <span class="note__title">Note</span>
@@ -37,7 +37,7 @@ This operation involves getting the <%= vars.scdf_tags %> of all the correspondi
 
 After the updates are available, the corresponding application is updated with the `i` icon to alert that there are new versions available. For instance, in the following screenshot, you can see that the application `filter` has new versions available.
 
-![alt-text="The updates check is shown in a dialog box."](./images/Applications_List.png)
+![Applications table: Columns are Name, Type, Version, URI, and Metadata URI. ](./images/Applications_List.png)
 
 After the application versions are available, you can either:
 
@@ -50,17 +50,17 @@ The following example shows how to perform a Stream update:
 
 Go to **Streams** page to see the list of streams.
 
-![alt-text=""](./images/Streams_List.png)
+![Streams table: columns are Name, Description, Definition, and Status.](./images/Streams_List.png)
 
 Click **Update Version(s)**.
 
 After clicking **Update Version(s)**, all the applications that are used by the Streams are updated with the available versions, and the **Applications** form is shown with the list of applications that have new versions available.
 
-![alt-text=""](./images/Stream_Update_Apps_List.png)
+![Applications dialog box showing list of applications for which there are new versions.](./images/Stream_Update_Apps_List.png)
 
 Here you can choose the applications you would like to update. Proceed by clicking **Next**.
 
-![alt-text=""](./images/Stream_Update_Apps_Select.png)
+![Applications dialog box: Buttons are Cancel and Next. The Next button becomes available if you select updates from the table.](./images/Stream_Update_Apps_Select.png)
 
 For each selected application, you can see the list of available versions.
 
@@ -68,11 +68,11 @@ The available versions shown here are the net-new versions for the same applicat
 
 You can also choose a version to be the default version for the application in the SCDF application registry. Going forward, this new version is used as the default version for stream deployments.
 
-![alt-text=""](./images/Stream_Update_AppVersionSelect.png)
+![The http pane: select the new version.](./images/Stream_Update_AppVersionSelect.png)
 
 You can select the version for all the other applications by selecting the application and the version on the dialog box.
 
-![alt-text=""](./images/Stream_Update_AnotherApp_VersionSelect.png)
+![The Time pane: select the new version.](./images/Stream_Update_AnotherApp_VersionSelect.png)
 
 After the new versions are selected for the applications, you can:
 
@@ -80,21 +80,21 @@ After the new versions are selected for the applications, you can:
 2. Mark the selected version as the default version (if there is a preferred version).
 3. Run the Stream update operation to update the version for each application to the selected version.
 
-![alt-text=""](./images/Stream_Update_Operations_List.png)
+![Update versions: Operations pane, no selections made](./images/Stream_Update_Operations_List.png)
 
-![alt-text=""](./images/Stream_Update.png)
+![Update versions: Operations pane, 2 operations selected](./images/Stream_Update.png)
 
-![alt-text=""](./images/Stream_Update_Result.png)
+![Update versions: Operations pane, all operations selected](./images/Stream_Update_Result.png)
 
 ### <a id='single-stream-update'></a> Single stream update
 
 If you prefer to update a single stream by choosing only the specific versions of the applications associated with that stream, then you can perform a single stream update by setting the application versions.
 
-![alt-text=""](./images/Single_Stream_Selection.png)
+![Streams table: perform update from the table.](./images/Single_Stream_Selection.png)
 
 After selecting the stream, you can choose the application versions and click **Update the stream**.
 
-![alt-text=""](./images/Single_Stream_Select_Version.png)
+![Update application version dialog box: buttons are Update the Stream and Cancel.](./images/Single_Stream_Select_Version.png)
 
 ### <a id='individual-application-update'></a> Individual application update
 
@@ -102,25 +102,25 @@ You can update the versions of the individual applications.
 
 Go to the **Applications** page.
 
-![alt-text=""](./images/Applications_List.png)
+![Applications pane with table containing a list of Applications.](./images/Applications_List.png)
 
 Click the ellipsis icon available to the left of the individual application and click **Manage Version**.
 
-![alt-text=""](./images/Applications_List_Manage_Version.png)
+![Menu with 3 options: Details, Manage Version, and Unregister](./images/Applications_List_Manage_Version.png)
 
 You see a form where you can select the latest available versions and mark them to be registered with SCDF.
 
 You can register multiple versions this way.
 
-![alt-text=""](./images/Application_Manage_Version.png)
+![Manage versions dialog box with list of versions.](./images/Application_Manage_Version.png)
 
-![alt-text=""](./images/Application_Manage_Version_Select.png)
+![Manage versions dialog box with version selected. Register versions button is now active.](./images/Application_Manage_Version_Select.png)
 
 You also have the option to mark any of the currently selected versions as the default version for the application and proceed with the registration.
 
-![alt-text="Click Make Default on the Confirmation dialog box."](./images/Application_MakeDefault.png)
+![Confirm Make default version dialog box. Click Make Default button.](./images/Application_MakeDefault.png)
 
-![alt-text="An in-progress dialog box appears."](./images/Application_Register.png)
+![In-progress dialog box.](./images/Application_Register.png)
 
 <% if vars.scdf_product == 'K8s' %>
 ### <a id='authentication'></a> Managing authentication
