@@ -29,17 +29,17 @@ Similarly, it offers four different types of writers:
 ## Register single-step batch job application
 
 Begin by registering the single-step batch job application.
-In the Spring Cloud Data Flow UI, select **Applications** on the left side of the page.
+In the Spring Cloud Data Flow UI, click **Applications** on the left side menu.
 This will open the **Applications** page.
 
-![alt-text=""](./images/SCDF_add_applications.png)
+![The buttons are: Add Application, Group Actions, and Refresh.](./images/SCDF_add_applications.png)
 
 To register an application, click **Add Application(s)**.
 When the **Add Application(s)** page appears, select **Register one or more applications**.
 
 Fill in the form as shown below, and click **Import Application(s)**:
 
-![alt-text="Fill in values for Name, Type, and URI."](./images/SCDF_add_ssbj.png)
+![Fill in values for Name, Type, and URI.](./images/SCDF_add_ssbj.png)
 
 ## Create task definition
 
@@ -51,7 +51,7 @@ This opens a graphical editor that you can use to compose tasks.
 The initial canvas contains `START` and `END` nodes. The left of the canvas lists the available task applications, including `singlestepbatchjob`, which was registered in the previous section.
 1. Drag the `singlestepbatchjob` task application to the canvas.
 1. Connect the task to the START and END nodes to complete the task definition.
-    ![alt-text=""](./images/SCDF_task_def.png)
+    ![Create a task pane](./images/SCDF_task_def.png)
 1. Click **Create Task**. You will be prompted to name the task definition,
 which is the logical name for the runtime configuration that you want to deploy.
 In this case, use the same name as the task application: `singlestepbatchjob`.
@@ -61,31 +61,40 @@ In this case, use the same name as the task application: `singlestepbatchjob`.
 
 You can launch the single-step batch job from the Task UI.
 
-![alt-text=""](./images/SCDF_task_launch.png)
+![Tasks pane: buttons are Create Task, Group Actions, and Refresh.](./images/SCDF_task_launch.png)
 
 To launch the task:
 
 1. Click the option control on the row of the `singlestepbatchjob` definition, and select **Launch**.
 This opens a form where you can add command line arguments and deployment properties.
-1. Select the **Edit** button under the **Application Properties** section of the **Launch** page.
-   ![alt-text=""](./images/SCDF_edit_properties.png)
+1. Click **Edit** under the **Application Properties** section of the **Launch** page.
+
+   ![The Launch page for your task](./images/SCDF_edit_properties.png)
+
 2. Click **App Properties**, and then select `spring.batch.job` from the drop-down menu. Enter:
     1. **chunk-size**: The number of records to process before committing a transaction
     2. **step-name**: The name of the step associated with the job
     3. **job-name**: The name of the job to be processed
-    ![alt-text=""](./images/SCDF_populate_job_props.png)
+
+    ![The App properties pane](./images/SCDF_populate_job_props.png)
+
 3. Fill in the reader properties.
     1. Click **Reader properties**.
     2. Select the reader type (File, AMQP, JDBC, or Kafka).
     3. Select the **properties** drop-down menu displayed and populate the properties for how to read from the input resource.
-    ![alt-text=""](./images/SCDF_select_reader.png)
+
+    ![The Reader properties pane](./images/SCDF_select_reader.png)
+
 4. Fill in the writer properties.
     1. Select **Writer properties**.
     2. Select the writer type (File, AMQP, JDBC, or Kafka).
     3. Click the **properties** drop-down menu and populate the properties for how to write to the output resource.
-   ![alt-text=""](./images/SCDF_select_writer.png)
+
+   ![The Writer properties pane](./images/SCDF_select_writer.png)
+
 5. Click **Launch task**. This runs the task on the Data Flow server's task platform and records a new task execution.
 You can track the execution progress using the [Task Progress Indicator](./task-execution-progress.html).
 1. When the task is complete, check the status of the job by selecting **Jobs executions** on the left side of the page.
     1. Select the execution ID of the task that you just launched to review the status of the job execution.
-    ![alt-text=""](./images/SCDF_job_status.png)
+
+    ![The Job execution page for the task you just launched.](./images/SCDF_job_status.png)
