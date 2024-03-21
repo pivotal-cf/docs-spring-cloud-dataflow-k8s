@@ -1,0 +1,15 @@
+---
+title:Using a TAP Workload to create and deploy a stream
+owner: Spring Cloud Data Flow Release Engineering
+---
+
+The sample stream is defined in a ticktock stream repository with the following YAML stream.yaml file:
+
+```yaml
+name: ticktock
+description: Test stream for TAP
+definition: time | log
+deploymentProperties: app.time.date-format=YYYY/mm/dd,app.log.level=WARN
+```
+
+This pipeline could be triggered using a Workload referencing the pipeline using a workload-type label.
