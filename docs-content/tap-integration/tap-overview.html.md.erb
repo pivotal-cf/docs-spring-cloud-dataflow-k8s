@@ -1,0 +1,43 @@
+---
+title: Integrating with Tanzu Application Platform
+owner: Spring Cloud Commercial
+---
+
+Here you will find a list of articles that detail the integrations available when using Spring Cloud Data Flow for Kubernetes on Tanzu Application Platform.
+
+<p class="note important">
+<span class="note__title">Important</span>
+The Tanzu Application Plaform integration described here is not yet a fully integrated solution.
+Spring Cloud Data Flow for Kubernetes runs only on TAP clusters with this recommended approach for now.
+</p>
+
+## Better on Tanzu Application Platform
+
+In addition to Spring Cloud Gateway OSS capabilities, the commercial Kubernetes offering provides additional commercial-only features. When this offering is installed on Tanzu Application Platform clusters, the operational and developer user experiences are further enhanced. The following sections will go over some of those commercial capabilities that should be considered as value added when migrating applications to Tanzu Application Platform.
+
+### Tanzu CLI Support
+
+Spring Cloud Gateway for Kubernetes Operator can be installed using the [Tanzu CLI](./operator-installation-tanzu-cli.html) from the Tanzu Application Platform package list. After that, the Operator and associated Custom Resource Definitions (CRD) will be available for reconciling API Gateway related custom resources.
+
+### GitOps for APIs
+
+Tanzu Application Platform provides Namespace Provisioner that activates continuous reconciliation of custom resources from Git repositories. This continuous reconciliation, also known as GitOps, can be used for [managing API Gateway instances](./guides-tap-namespace-provisioner.html) and related resources.
+
+### Visibility in Organization Catalog
+
+API Gateways can be exposed in the [Organization Catalog](./guides-tap-organization-catalog.html) for visibility across the organization. This read-only information can help understand deployment topology and current status of API Gateway resources.
+
+### Real-time metrics
+
+Get real-time [App Live View metrics on your API Gateway instances](<%= vars.tap.docs_url %>/<%= vars.tap.version %>/tap/tap-gui-plugins-app-live-view-springcloudgateway.html). These metrics include usage, performance, error rates, authentication and access control information, and more.
+
+### Configuring external access
+
+Tanzu Application Platform includes Contour ingress controller. You can define an ingress to expose your [API Gateway](./guides-tap-exposing-traffic-contour.html) externally from the cluster.
+
+## Migrating existing applications
+
+The following guides have been created to support migration of existing applications:
+
+* [Migrating from Tanzu Application Service](./guides-migration-tas.html)
+* [Migrating from Spring Cloud Gateway OSS custom implementation](./guides-migration-oss.html)
