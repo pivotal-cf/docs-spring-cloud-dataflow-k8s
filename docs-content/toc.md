@@ -18,6 +18,7 @@
     * [Integrating with Tanzu Application Platform](./tap-integration/tap-overview.html.md.erb)
         * [App visibility in TAPs Backstage UI](./tap-integration/app-visibility-in%20TAP.html.md.erb)
         * [Using a TAP Workload to create and deploy a stream](./tap-integration/creating-deploying-stream.html.md.erb)
+        * []()
     * [Pro features](pro-features/index.html.md.erb)
         * [Multi-IO stream support](pro-features/multi-io-support.html.md.erb)
         * [Application version updates](pro-features/application-version-updates.html.md.erb)

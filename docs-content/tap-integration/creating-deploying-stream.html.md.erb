@@ -13,3 +13,67 @@ deploymentProperties: app.time.date-format=YYYY/mm/dd,app.log.level=WARN
 ```
 
 This pipeline could be triggered using a Workload referencing the pipeline using a workload-type label.
+
+```yaml
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: ticktock-stream
+  labels:
+    apps.tanzu.vmware.com/workload-type: scdf-stream
+    app.kubernetes.io/part-of: ticktock
+spec:
+  params:
+  - name: scdf_pipeline_matching_labels
+    value:
+      apps.tanzu.vmware.com/pipeline: scdf-stream
+  source:
+    git:
+      url: https://github.com/trisberg/ticktock-stream
+      ref:
+        branch: main
+```
+
+It is possible to create a Tekton pipeline for creating and deploying it. We created a ClusterSupplyChain and a ClusterSourceTemplate to test the following pipeline:
+
+```yaml
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: scdf-stream
+  labels:
+    apps.tanzu.vmware.com/pipeline: scdf-stream
+spec:
+  params:
+    - name: source-url
+    - name: source-revision
+  tasks:
+    - name: deploy
+      params:
+        - name: source-url
+          value: $(params.source-url)
+        - name: source-revision
+          value: $(params.source-revision)
+      taskSpec:
+        params:
+          - name: source-url
+          - name: source-revision
+        steps:
+          - name: deploy
+            image: springdeveloper/scdf-shell:latest
+            script: |-
+              cd `mktemp -d`
+              wget -qO- $(params.source-url) | tar xz -m
+              export SCDF_URL=http://34.172.20.216
+              /apply.sh $PWD/stream.yaml
+              exit 0
+```
+
+<p class="note">
+<span class="note__title">Note</span>
+The SCDF_URL points to the Data Flow API server. If it is in the same cluster we could try using its DNS name <code>scdf-spring-cloud-dataflow-server.scdf.svc.cluster.local</code>.
+</p>
+
+The end result would be a stream deployed and visible in the Data Flow UI.
+
+![The TAP Workloads screen now shows the deployed stream, ticktock-stream.](./images/tap-workloads-new-deploy.png)
