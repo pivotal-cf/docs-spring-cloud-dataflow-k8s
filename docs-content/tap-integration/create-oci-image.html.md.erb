@@ -3,114 +3,123 @@ title: Create an OCI image for the Tekton pipeline
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-The Tekton pipeline relies on an OCI image to run the defined script for the pipeline. We use the Spring Cloud Data Flow Shell as part of a `apply.sh` script combined with a `shell.sh` script for running the SCDF shell. We can package the SCDF shell JAR file in an image that has Java installed. Then we add the two shell scripts. This topic describes how to perform these tasks.
+The Tekton pipeline relies on an OCI image to run the defined script for the pipeline.
 
-This is the Dockerfile for this:
+This topic describes how to perform these tasks:
 
-![image/Dockerfile](https://github.com/trisberg/tap-scdf/blob/main/image/Dockerfile)
+1. Use the Spring Cloud Data Flow Shell as part of a `apply.sh` script combined with a `shell.sh` script for running the SCDF shell.
+2. Package the SCDF shell JAR file in an image that has Java installed and add the two shell scripts.
 
-```
-FROM eclipse-temurin:17-jdk
+## Procedure
 
-RUN mkdir /app
-COPY spring-cloud-dataflow-shell-*.jar /app/spring-cloud-dataflow-shell.jar
-COPY shell.sh shell.sh
-RUN chmod +x shell.sh
-COPY apply.sh apply.sh
-RUN chmod +x apply.sh
-```
+1. Use the Spring Cloud Data Flow Shell as part of a `apply.sh` script combined with a `shell.sh` script for running the SCDF shell.
+This is the Dockerfile to use for this.
+See [image/Dockerfile](https://github.com/trisberg/tap-scdf/blob/main/image/Dockerfile).
 
-We build this image and push to the tag `springdeveloper/scdf-shell:latest` that was used by the pipline definition.
+    ```
+    FROM eclipse-temurin:17-jdk
 
-The `apply.sh` script checks if the stream exists, if it does it updates it, otherwise it creates and deploys it.
+    RUN mkdir /app
+    COPY spring-cloud-dataflow-shell-*.jar /app/spring-cloud-dataflow-shell.jar
+    COPY shell.sh shell.sh
+    RUN chmod +x shell.sh
+    COPY apply.sh apply.sh
+    RUN chmod +x apply.sh
+    ```
 
-> [image/apply.sh](https://github.com/trisberg/tap-scdf/blob/main/image/apply.sh)
-```sh
-#!/bin/bash
+1. Build this image and push it to the tag `springdeveloper/scdf-shell:latest` that was used by the pipeline definition.
 
-SHELL=/shell.sh
-STREAM=$1
+    The `apply.sh` script checks if the stream exists, if it does it updates it, otherwise it creates and deploys it.
+    See [image/apply.sh](https://github.com/trisberg/tap-scdf/blob/main/image/apply.sh)
 
-n=$(grep -e name: $STREAM)
-name=${n##name: }
-d=$(grep -e definition: $STREAM)
-definition=${d##definition: }
-dp=$(grep -e deploymentProperties: $STREAM)
-deploymentProperties=${dp##deploymentProperties: }
+    ```sh
+    #!/bin/bash
 
-echo "stream info $name" > exists.cmd
-$SHELL --dataflow.uri=$SCDF_URL --spring.shell.commandFile=exists.cmd > exists.txt 2>&1
-exists=$(grep ║$name exists.txt)
+    SHELL=/shell.sh
+    STREAM=$1
 
-if [ -z "$exists" ]; then
-  echo "CREATE $name"
-  echo "stream create --name $name --definition \"$definition\" --deploy false" > stream.cmd
-  echo "stream deploy --name $name --properties \"$deploymentProperties\"" >> stream.cmd
-else
-  echo "UPDATE $name"
-  echo "stream update --name $name --properties \"$deploymentProperties\"" > stream.cmd
-fi
-$SHELL --dataflow.uri=$SCDF_URL --spring.shell.commandFile=stream.cmd > stream.txt 2>&1
-cat stream.txt
-```
+    n=$(grep -e name: $STREAM)
+    name=${n##name: }
+    d=$(grep -e definition: $STREAM)
+    definition=${d##definition: }
+    dp=$(grep -e deploymentProperties: $STREAM)
+    deploymentProperties=${dp##deploymentProperties: }
+
+    echo "stream info $name" > exists.cmd
+    $SHELL --dataflow.uri=$SCDF_URL --spring.shell.commandFile=exists.cmd > exists.txt 2>&1
+    exists=$(grep ║$name exists.txt)
+
+    if [ -z "$exists" ]; then
+    echo "CREATE $name"
+    echo "stream create --name $name --definition \"$definition\" --deploy false" > stream.cmd
+    echo "stream deploy --name $name --properties \"$deploymentProperties\"" >> stream.cmd
+    else
+    echo "UPDATE $name"
+    echo "stream update --name $name --properties \"$deploymentProperties\"" > stream.cmd
+    fi
+    $SHELL --dataflow.uri=$SCDF_URL --spring.shell.commandFile=stream.cmd > stream.txt 2>&1
+    cat stream.txt
+    ```
 
 ## Create stream definition files
 
-We create a Git repo to contain the files needed for the stream workload.
+Now, create a Git repository to contain the files needed for the stream workload.
 
-First a `stream.yaml` file to define the stream definition and deployment properties.
+1. Make a `stream.yaml` file to define the stream definition and deployment properties.
+See [stream.yaml](https://github.com/trisberg/ticktock-stream/blob/main/stream.yaml).
 
-> [stream.yaml](https://github.com/trisberg/ticktock-stream/blob/main/stream.yaml)
-```yaml
-name: ticktock
-description: Test stream for TAP
-definition: time | log
-deploymentProperties: app.time.date-format=YYYY-mm-dd,app.log.level=WARN
-```
+    ```yaml
+    name: ticktock
+    description: Test stream for TAP
+    definition: time | log
+    deploymentProperties: app.time.date-format=YYYY-mm-dd,app.log.level=WARN
+    ```
 
-This is the classic SCDF sample stream that logs the time from the time app.
+    This is the classic SCDF sample stream that logs the time from the time app.
 
-We need a `workload.yaml` file that references the supply-chain pipeline that we defined earlier using a label of `apps.tanzu.vmware.com/workload-type: scdf-stream`.
+1. You need a `workload.yaml` file that references the supply-chain pipeline that you defined earlier using a label of `apps.tanzu.vmware.com/workload-type: scdf-stream`.
+See [config/workload.yaml](https://github.com/trisberg/ticktock-stream/blob/main/config/workload.yaml).
 
-> [config/workload.yaml](https://github.com/trisberg/ticktock-stream/blob/main/config/workload.yaml)
-```yaml
-apiVersion: carto.run/v1alpha1
-kind: Workload
-metadata:
-  name: ticktock-stream
-  labels:
-    apps.tanzu.vmware.com/workload-type: scdf-stream
-    app.kubernetes.io/part-of: ticktock
-spec:
-  params:
-  - name: scdf_pipeline_matching_labels
-    value:
-      apps.tanzu.vmware.com/pipeline: scdf-stream
-  source:
-    git:
-      url: https://github.com/trisberg/ticktock-stream
-      ref:
-        branch: main
-```
+    ```yaml
+    apiVersion: carto.run/v1alpha1
+    kind: Workload
+    metadata:
+    name: ticktock-stream
+    labels:
+        apps.tanzu.vmware.com/workload-type: scdf-stream
+        app.kubernetes.io/part-of: ticktock
+    spec:
+    params:
+    - name: scdf_pipeline_matching_labels
+        value:
+        apps.tanzu.vmware.com/pipeline: scdf-stream
+    source:
+        git:
+        url: https://github.com/trisberg/ticktock-stream
+        ref:
+            branch: main
+    ```
 
-The final piece is the Backstage `catalog-info.yaml` catalog component file that will allow the TAP Developer Portal UI to display the runtime resources for our stream.
+1. Lastly, you need the Backstage `catalog-info.yaml` catalog component file that will allow the TAP Developer Portal UI to display the runtime resources for our stream.
+See [catalog/catalog-info.yaml](https://github.com/trisberg/ticktock-stream/blob/main/catalog/catalog-info.yaml).
 
->[catalog/catalog-info.yaml](https://github.com/trisberg/ticktock-stream/blob/main/catalog/catalog-info.yaml)
-```yaml
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  name: ticktock
-  description: TickTock Stream Apps
-  tags:
-    - spring
-    - streaming
-    - tanzu
-  annotations:
-    'backstage.io/kubernetes-label-selector': 'spring-group-id=ticktock'
-spec:
-  type: service
-  lifecycle: experimental
-  owner: default-team
-  system: dataflow
-```
+    ```yaml
+    apiVersion: backstage.io/v1alpha1
+    kind: Component
+    metadata:
+    name: ticktock
+    description: TickTock Stream Apps
+    tags:
+        - spring
+        - streaming
+        - tanzu
+    annotations:
+        'backstage.io/kubernetes-label-selector': 'spring-group-id=ticktock'
+    spec:
+    type: service
+    lifecycle: experimental
+    owner: default-team
+    system: dataflow
+    ```
+
+Next: Try out your migration by deploying your supply chain and pipeline. See [Test your migration](./test-deploy.html.md.erb).

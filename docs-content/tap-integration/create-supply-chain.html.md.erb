@@ -7,169 +7,169 @@ This topic describes how to create a supply chain for the Spring Cloud Data Flow
 
 ## Create a supply-chain for the SCDF streams
 
-We need to create a few resources for the supply-chain to be able to run a workload that can deploy a stream.
+You must create a few resources for the supply-chain to be able to run a workload that can deploy a stream.
 
-First we create a ClusterSupplyChain named `deploy-scdf-stream`. This is based on the `source-test-to-url` one that is part of the standard TAP install.
+1. Create a ClusterSupplyChain named `deploy-scdf-stream`. This is based on the `source-test-to-url` supply chain that is part of the standard TAP install.
+See [supply-chain/supply-chain.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/supply-chain.yaml).
 
-> [supply-chain/supply-chain.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/supply-chain.yaml)
-```yaml
-apiVersion: carto.run/v1alpha1
-kind: ClusterSupplyChain
-metadata:
-  name: deploy-scdf-stream
-spec:
-  params:
-  - default: ""
-    name: ca_cert_data
-  - default: main
-    name: gitops_branch
-  - default: supplychain
-    name: gitops_user_name
-  - default: supplychain
-    name: gitops_user_email
-  - default: supplychain@cluster.local
-    name: gitops_commit_message
-  - default: ""
-    name: gitops_ssh_secret
-  - default: ""
-    name: gitops_commit_branch
-  resources:
-  - name: source-provider
-    params:
-    - default: default
-      name: serviceAccount
-    - default: go-git
-      name: gitImplementation
-    templateRef:
-      kind: ClusterSourceTemplate
-      name: source-template
-    sources:
-    - name: source
-      resource: source-deployer
-  - name: source-deployer
-    sources:
-    - name: source
-      resource: source-provider
-    templateRef:
-      kind: ClusterSourceTemplate
-      name: scdf-stream-pipeline
-  selectorMatchExpressions:
-  - key: apps.tanzu.vmware.com/workload-type
-    operator: In
-    values:
-    - scdf-stream
-```
-
-Then, we create the ClusterSourceTemplate for our `scdf-stream-pipeline` based on the template for the TAP standard `testing-pipeline`.
-
-> [supply-chain/clustersourcetemplate.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/clustersourcetemplate.yaml)
-```yaml
-apiVersion: carto.run/v1alpha1
-kind: ClusterSourceTemplate
-metadata:
-  name: scdf-stream-pipeline
-spec:
-  healthRule:
-    singleConditionType: Ready
-  lifecycle: mutable
-  params:
-  - default:
-      apps.tanzu.vmware.com/pipeline: scdf-stream
-    name: scdf_pipeline_matching_labels
-  revisionPath: .status.outputs.revision
-  urlPath: .status.outputs.url
-  ytt: |
-    #@ load("@ytt:data", "data")
-
-    #@ def merge_labels(fixed_values):
-    #@   labels = {}
-    #@   if hasattr(data.values.workload.metadata, "labels"):
-    #@     exclusions = ["kapp.k14s.io/app", "kapp.k14s.io/association"]
-    #@     for k,v in dict(data.values.workload.metadata.labels).items():
-    #@       if k not in exclusions:
-    #@         labels[k] = v
-    #@       end
-    #@     end
-    #@   end
-    #@   labels.update(fixed_values)
-    #@   return labels
-    #@ end
-
-    #@ def merged_tekton_params():
-    #@   params = []
-    #@   if hasattr(data.values, "params") and hasattr(data.values.params, "scdf_pipeline_params"):
-    #@     for param in data.values.params["scdf_pipeline_params"]:
-    #@       params.append({ "name": param, "value": data.values.params["scdf_pipeline_params"][param] })
-    #@     end
-    #@   end
-    #@   params.append({ "name": "source-url", "value": data.values.source.url })
-    #@   params.append({ "name": "source-revision", "value": data.values.source.revision })
-    #@   return params
-    #@ end
-    ---
+    ```yaml
     apiVersion: carto.run/v1alpha1
-    kind: Runnable
+    kind: ClusterSupplyChain
     metadata:
-      name: #@ data.values.workload.metadata.name
-      labels: #@ merge_labels({ "app.kubernetes.io/component": "test" })
+    name: deploy-scdf-stream
     spec:
-      #@ if/end hasattr(data.values.workload.spec, "serviceAccountName"):
-      serviceAccountName: #@ data.values.workload.spec.serviceAccountName
-
-      runTemplateRef:
-        name: tekton-source-pipelinerun
-        kind: ClusterRunTemplate
-
-      selector:
-        resource:
-          apiVersion: tekton.dev/v1beta1
-          kind: Pipeline
-
-        #@ not hasattr(data.values, "scdf_pipeline_matching_labels") or fail("scdf_pipeline_matching_labels param is required")
-        matchingLabels: #@ data.values.params["scdf_pipeline_matching_labels"] or fail("scdf_pipeline_matching_labels param cannot be empty")
-
-      inputs:
-        tekton-params: #@ merged_tekton_params()
-```
-
-And, finally we create the Tekton pipeline that will run the stream deployment.
-
-> [supply-chain/pipeline.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/pipeline.yaml)
-```yaml
-kind: Pipeline
-metadata:
-  name: scdf-stream
-  labels:
-    apps.tanzu.vmware.com/pipeline: scdf-stream
-spec:
-  params:
-    - name: source-url
-    - name: source-revision
-  tasks:
-    - name: deploy
-      params:
-        - name: source-url
-          value: $(params.source-url)
-        - name: source-revision
-          value: $(params.source-revision)
-      taskSpec:
+    params:
+    - default: ""
+        name: ca_cert_data
+    - default: main
+        name: gitops_branch
+    - default: supplychain
+        name: gitops_user_name
+    - default: supplychain
+        name: gitops_user_email
+    - default: supplychain@cluster.local
+        name: gitops_commit_message
+    - default: ""
+        name: gitops_ssh_secret
+    - default: ""
+        name: gitops_commit_branch
+    resources:
+    - name: source-provider
         params:
-          - name: source-url
-          - name: source-revision
-        steps:
-          - name: deploy
-            image: springdeveloper/scdf-shell:latest
-            script: |-
-              cd `mktemp -d`
-              wget -qO- $(params.source-url) | tar xz -m
-              export SCDF_URL=http://172.16.0.1
-              /apply.sh $PWD/stream.yaml
-              exit 0
-```
+        - default: default
+        name: serviceAccount
+        - default: go-git
+        name: gitImplementation
+        templateRef:
+        kind: ClusterSourceTemplate
+        name: source-template
+        sources:
+        - name: source
+        resource: source-deployer
+    - name: source-deployer
+        sources:
+        - name: source
+        resource: source-provider
+        templateRef:
+        kind: ClusterSourceTemplate
+        name: scdf-stream-pipeline
+    selectorMatchExpressions:
+    - key: apps.tanzu.vmware.com/workload-type
+        operator: In
+        values:
+        - scdf-stream
+    ```
+
+1. Create the ClusterSourceTemplate for our `scdf-stream-pipeline` based on the template for the TAP standard `testing-pipeline`.
+See [supply-chain/clustersourcetemplate.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/clustersourcetemplate.yaml).
+
+    ```yaml
+    apiVersion: carto.run/v1alpha1
+    kind: ClusterSourceTemplate
+    metadata:
+    name: scdf-stream-pipeline
+    spec:
+    healthRule:
+        singleConditionType: Ready
+    lifecycle: mutable
+    params:
+    - default:
+        apps.tanzu.vmware.com/pipeline: scdf-stream
+        name: scdf_pipeline_matching_labels
+    revisionPath: .status.outputs.revision
+    urlPath: .status.outputs.url
+    ytt: |
+        #@ load("@ytt:data", "data")
+
+        #@ def merge_labels(fixed_values):
+        #@   labels = {}
+        #@   if hasattr(data.values.workload.metadata, "labels"):
+        #@     exclusions = ["kapp.k14s.io/app", "kapp.k14s.io/association"]
+        #@     for k,v in dict(data.values.workload.metadata.labels).items():
+        #@       if k not in exclusions:
+        #@         labels[k] = v
+        #@       end
+        #@     end
+        #@   end
+        #@   labels.update(fixed_values)
+        #@   return labels
+        #@ end
+
+        #@ def merged_tekton_params():
+        #@   params = []
+        #@   if hasattr(data.values, "params") and hasattr(data.values.params, "scdf_pipeline_params"):
+        #@     for param in data.values.params["scdf_pipeline_params"]:
+        #@       params.append({ "name": param, "value": data.values.params["scdf_pipeline_params"][param] })
+        #@     end
+        #@   end
+        #@   params.append({ "name": "source-url", "value": data.values.source.url })
+        #@   params.append({ "name": "source-revision", "value": data.values.source.revision })
+        #@   return params
+        #@ end
+        ---
+        apiVersion: carto.run/v1alpha1
+        kind: Runnable
+        metadata:
+        name: #@ data.values.workload.metadata.name
+        labels: #@ merge_labels({ "app.kubernetes.io/component": "test" })
+        spec:
+        #@ if/end hasattr(data.values.workload.spec, "serviceAccountName"):
+        serviceAccountName: #@ data.values.workload.spec.serviceAccountName
+
+        runTemplateRef:
+            name: tekton-source-pipelinerun
+            kind: ClusterRunTemplate
+
+        selector:
+            resource:
+            apiVersion: tekton.dev/v1beta1
+            kind: Pipeline
+
+            #@ not hasattr(data.values, "scdf_pipeline_matching_labels") or fail("scdf_pipeline_matching_labels param is required")
+            matchingLabels: #@ data.values.params["scdf_pipeline_matching_labels"] or fail("scdf_pipeline_matching_labels param cannot be empty")
+
+        inputs:
+            tekton-params: #@ merged_tekton_params()
+    ```
+
+1. Now create the Tekton pipeline that will run the stream deployment.
+See [supply-chain/pipeline.yaml](https://github.com/trisberg/tap-scdf/blob/main/supply-chain/pipeline.yaml).
+
+    ```yaml
+    kind: Pipeline
+    metadata:
+    name: scdf-stream
+    labels:
+        apps.tanzu.vmware.com/pipeline: scdf-stream
+    spec:
+    params:
+        - name: source-url
+        - name: source-revision
+    tasks:
+        - name: deploy
+        params:
+            - name: source-url
+            value: $(params.source-url)
+            - name: source-revision
+            value: $(params.source-revision)
+        taskSpec:
+            params:
+            - name: source-url
+            - name: source-revision
+            steps:
+            - name: deploy
+                image: springdeveloper/scdf-shell:latest
+                script: |-
+                cd `mktemp -d`
+                wget -qO- $(params.source-url) | tar xz -m
+                export SCDF_URL=http://172.16.0.1
+                /apply.sh $PWD/stream.yaml
+                exit 0
+    ```
 
 <p class="note">
 <span class="note__title">Note</span>
 The VMware Spring team provides the URL for the Spring Cloud Data Flow server for this pipeline to use.
 </p>
 
-Next, create an OCI image that can be used by the Tekton pipeline. See [Create an OCI image]();
+Next, create an OCI image that can be used by the Tekton pipeline. See [Create an OCI image for the Tekton pipeline](./create-oci-image.html.md.erb).

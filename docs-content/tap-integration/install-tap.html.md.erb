@@ -9,7 +9,11 @@ First, install TAP using the full profile. See the [TAP documentation](https://d
 
 ## Install SCDF in the TAP cluster
 
-We installed the SCDF system for Kubernetes using the [Bitnami Helm chart](https://bitnami.com/stack/spring-cloud-dataflow/helm). The namespace was specified as `scdf` and the service is installed on port 80 using `LoadBalancer`.
+This example assumes:
+
+* You installed the SCDF system for Kubernetes using the [Bitnami Helm chart](https://bitnami.com/stack/spring-cloud-dataflow/helm).
+* The namespace was specified as `scdf`.
+* The service is installed on port 80 using `LoadBalancer`.
 
 ```sh
 helm install scdf oci://registry-1.docker.io/bitnamicharts/spring-cloud-dataflow \
@@ -18,13 +22,13 @@ helm install scdf oci://registry-1.docker.io/bitnamicharts/spring-cloud-dataflow
   --set server.service.ports.http=80
 ```
 
-	
 <p class="note">
 <span class="note__title">Note</span>
-There is also a [Carvel package](https://dataflow.spring.io/docs/installation/kubernetes/carvel/) that can be used to install SCDF on your TAP cluster.
+There is also a <a href="https://dataflow.spring.io/docs/installation/kubernetes/carvel/">Carvel package</a>
+that can be used to install Spring Cloud Data Flow on your TAP cluster.
 </p>
 
-Once the `LoadBalancer` EXTERNAL-IP address has been assigned we need to capture it so we can access the SCDF API and UI.
+After the `LoadBalancer` EXTERNAL-IP address has been assigned, you must capture it so that you can access the SCDF API and UI.
 
 You can use the following command to see the IP address assigned:
 
@@ -47,15 +51,18 @@ export SCDF_URL=http://172.16.0.1
 
 ## Add the stream apps
 
-In order to create a stream you need to have the stream apps that make up your stream registered with the SCDF server. You can either use the SCDF `shell` or make API calls using `curl` command.
+To create a stream you need to have the stream apps that make up your stream registered with the SCDF server. There are two ways to do this:
 
-We will register the Docker images for the `time` and `log` stream apps.
+* [Use the SCDF `shell`](#using-the-scdf-shell)
+* [Make API calls using `curl` command](#using-the-scdf-api-server)
+
+First, register the Docker images for the `time` and `log` stream apps.
 
 ### Using the SCDF shell
 
-You can download the most recent shell Java JAR file named `spring-cloud-dataflow-shell-2.11.2.jar` from [Maven Central](https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dataflow-shell/2.11.2/).
+You can download the most recent shell Java JAR file, `spring-cloud-dataflow-shell-2.11.2.jar`, from [Maven Central](https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dataflow-shell/2.11.2/).
 
-To start the shell you can run:
+To start the shell, run:
 
 ```sh
 java -jar ./spring-cloud-dataflow-shell-2.11.2.jar --dataflow.uri=$SCDF_URL
@@ -63,7 +70,7 @@ java -jar ./spring-cloud-dataflow-shell-2.11.2.jar --dataflow.uri=$SCDF_URL
 
 where `SCDF_URL` was set in the previous section.
 
-Once the shell is up and running you can register the two apps using:
+After the shell is up and running, register the two apps:
 
 ```sh
 app register --name time --type source --uri docker:springcloudstream/time-source-rabbit:4.0.0 --bootVersion 3
@@ -81,4 +88,4 @@ curl "$SCDF_URL/apps/sink/log?bootVersion=3" -i -X POST \
     -d 'uri=docker%3Aspringcloudstream/log-sink-rabbit%3A4.0.0'
 ```
 
-Next, create a supply chain for the SCDF streams. See [Create a supply chain]().
+Next, create a supply chain for the SCDF streams. See [Create a supply chain](./create-supply-chain.html.md.erb).

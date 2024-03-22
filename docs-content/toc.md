@@ -19,7 +19,7 @@
         * [Install Spring Cloud Data Flow in the TAP cluster](./tap-integration/install-tap.html.md.erb)
         * [Create a supply chain for the SCDF streams](./tap-integration/create-supply-chain.html.md.erb)
         * [Create an OCI image for the Tekton pipeline](./tap-integration/create-oci-image.html.md.erb)
-        * [Test your deployment](./tap-integration/test-deploy.html.md.erb)
+        * [Test your migration](./tap-integration/test-deploy.html.md.erb)
     * [Pro features](pro-features/index.html.md.erb)
         * [Multi-IO stream support](pro-features/multi-io-support.html.md.erb)
         * [Application version updates](pro-features/application-version-updates.html.md.erb)

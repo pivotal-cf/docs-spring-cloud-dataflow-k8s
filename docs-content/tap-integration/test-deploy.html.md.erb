@@ -1,13 +1,13 @@
 ---
-title: Testing your Tanzu Application Platform integration
+title: Test your migration
 owner: Spring Cloud Data Flow Release Engineering
 ---
 
-Now you can try it all out. Start by deploying the new supply chain and pipeline.
+Now you can try it all out using the instructions in this topic.
 
 ## Create supply-chain
 
-We are now ready to deploy our supply chain and pipeline:
+Start by deploying the new supply chain and pipeline.
 
 ```sh
 kubectl apply -f ./supply-chain/supply-chain.yaml
@@ -17,61 +17,61 @@ kubectl apply -f ./supply-chain/pipeline.yaml
 
 ## Deploy workload
 
-Once those files are applied we can create the worklod resource:
+1. Now you can create the workload resource. Run:
 
-```sh
-tanzu apps workload create ticktock -f https://raw.githubusercontent.com/trisberg/ticktock-stream/main/config/workload.yaml -y
-```
+    ```sh
+    tanzu apps workload create ticktock -f https://raw.githubusercontent.com/trisberg/ticktock-stream/main/config/workload.yaml -y
+    ```
 
-After a minute or so the workload should have been processed and you should see it completed:
+1. It takes about a minute for the workload to be processed. You should see a message like this:
 
-```txt
-% tanzu apps workload get ticktock                        
-📡 Overview
-   name:        ticktock
-   type:        scdf-stream
-   namespace:   default
+    ```txt
+    % tanzu apps workload get ticktock                        
+    📡 Overview
+    name:        ticktock
+    type:        scdf-stream
+    namespace:   default
 
-💾 Source
-   type:       git
-   url:        https://github.com/trisberg/ticktock-stream
-   branch:     main
-   revision:   main@sha1:ba89ba3007092433c172a2836d0d5f985a6b397b
+    💾 Source
+    type:       git
+    url:        https://github.com/trisberg/ticktock-stream
+    branch:     main
+    revision:   main@sha1:ba89ba3007092433c172a2836d0d5f985a6b397b
 
-📦 Supply Chain
-   name:   deploy-scdf-stream
+    📦 Supply Chain
+    name:   deploy-scdf-stream
 
-   NAME              READY   HEALTHY   UPDATED   RESOURCE
-   source-provider   True    True      3m11s     gitrepositories.source.toolkit.fluxcd.io/ticktock
-   source-deployer   True    True      2m36s     runnables.carto.run/ticktock
+    NAME              READY   HEALTHY   UPDATED   RESOURCE
+    source-provider   True    True      3m11s     gitrepositories.source.toolkit.fluxcd.io/ticktock
+    source-deployer   True    True      2m36s     runnables.carto.run/ticktock
 
-🚚 Delivery
+    🚚 Delivery
 
-   Delivery resources not found.
+    Delivery resources not found.
 
-💬 Messages
-   No messages found.
+    💬 Messages
+    No messages found.
 
-🛶 Pods
-   NAME                        READY   STATUS      RESTARTS   AGE
-   ticktock-rv22v-deploy-pod   0/1     Completed   0          3m4s
+    🛶 Pods
+    NAME                        READY   STATUS      RESTARTS   AGE
+    ticktock-rv22v-deploy-pod   0/1     Completed   0          3m4s
 
-To see logs: "tanzu apps workload tail ticktock --timestamp --since 1h"
-```
+    To see logs: "tanzu apps workload tail ticktock --timestamp --since 1h"
+    ```
 
-You can review the logs from the build pod:
+1. To review the logs from the build pod, run:
 
-```txt
-% kubectl logs ticktock-rv22v-deploy-pod
-Defaulted container "step-deploy" out of: step-deploy, prepare (init), place-scripts (init)
-CREATE ticktock
-Created new stream 'ticktock'
-Deployment request has been sent for stream 'ticktock'
-```
+    ```txt
+    % kubectl logs ticktock-rv22v-deploy-pod
+    Defaulted container "step-deploy" out of: step-deploy, prepare (init), place-scripts (init)
+    CREATE ticktock
+    Created new stream 'ticktock'
+    Deployment request has been sent for stream 'ticktock'
+    ```
 
 ## View stream status with SCDF shell
 
-The stream apps will be deployed in the `scdf` namespace and we can review the status using some SCDF shell commands:
+The stream apps will be deployed in the `scdf` namespace and you can review the status using some SCDF shell commands:
 
 ```txt
 dataflow:>stream list
@@ -122,31 +122,32 @@ Stream Deployment properties: {
 
 ## View stream status with SCDF Dashboard UI
 
-You can open a browser for the SCDF Dashboard UI using:
+1. To open a browser for the SCDF Dashboard UI, run:
 
-```sh
-open $SCDF_URL/dashboard
-```
+    ```sh
+    open $SCDF_URL/dashboard
+    ```
 
-Once there you can select **Streams** in the left panel and you should see the `ticktock` stream deployed.
+1. From there, select **Streams** in the left panel. You should see the `ticktock` stream deployed.
 
-![SCDF dashboard UI](./images/SCDF-ui-ticktock.png)
+    ![SCDF dashboard UI](./images/SCDF-ui-ticktock.png)
 
 ## View stream resources in TAP Developer Portal UI
 
-Open the TAP Developer Portal (the TAP installation instructions should have provided a URL for you to use).
+1. Open the TAP Developer Portal (the TAP installation instructions should have provided a URL for you to use).
+1. On the **Home** page, click **REGISTER ENTITY** and provide the **Repository URL** for the `catalog-info.yaml`. In the `ticktock` sample repo, this file is available at this URL: https://github.com/trisberg/ticktock-stream/blob/main/catalog/catalog-info.yaml.
+1. Finish the registration by clicking **ANALYZE**, and then **IMPORT**.
 
-From the "Home" page click "REGISTER ENTITY" button and provide the "Repository URL" for the `catalog-info.yaml`. In the `ticktock` sample repo we have this file at this URL: https://github.com/trisberg/ticktock-stream/blob/main/catalog/catalog-info.yaml. Finish the registration using "ANALYZE" and then "IMPORT" buttons.
+1. Click **VIEW COMPONENT** to see the component view.
+2. Click the **Runtime Resources** tab to see the Kubernetes resources that belong to the `ticktock` stream apps.
 
-Click on "VIEW COMPONENT" and this brings up the component view. You can select the "Runtime Resources" tab to see the Kubernetes resources that belong to the `ticktock` stream apps.
-
-![TAP dev portal](./images/TAP-dev-portal-ticktock.png)
+    ![TAP dev portal](./images/TAP-dev-portal-ticktock.png)
 
 ## Update the stream properties
 
-We can update the deployment properties for the stream.
-Let's say we change the date format and push this change to the Git repository for the ticktock stream.
-The supply-chain is monitoring the Git repository and when it detects this change it will launch another stream deployment.
+You can update the deployment properties for the stream, if required.
+Assume, for example, that you change the date format and push this change to the Git repository for the ticktock stream.
+The supply-chain is monitoring the Git repository. When it detects this change, it will launch another stream deployment.
 
 ```txt
 % tanzu apps workload get ticktock
@@ -183,7 +184,7 @@ The supply-chain is monitoring the Git repository and when it detects this chang
 To see logs: "tanzu apps workload tail ticktock --timestamp --since 1h"
 ```
 
-We can see a second deploy-pod that is running. Let's look at the logs from that pod:
+You can see a second deploy-pod that is running. You can also look at the logs from that pod:
 
 ```txt
 % kubectl logs ticktock-kdv75-deploy-pod
@@ -192,4 +193,4 @@ UPDATE ticktock
 Update request has been sent for the stream 'ticktock'
 ```
 
-So, the `apply.sh` detected an existing `ticktock` stream and updated the deployment properties.
+You can see that the `apply.sh` detected an existing `ticktock` stream and updated the deployment properties.
