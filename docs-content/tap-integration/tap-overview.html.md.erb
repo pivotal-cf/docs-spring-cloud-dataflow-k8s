@@ -11,17 +11,9 @@ The Tanzu Application Platform integration described here is not yet a fully int
 Spring Cloud Data Flow for Kubernetes runs only on TAP clusters with this recommended approach.
 </p>
 
-## Better on Tanzu Application Platform
-
-In addition to Spring Cloud Gateway OSS capabilities, the commercial Kubernetes offering provides additional commercial-only features. When this offering is installed on Tanzu Application Platform clusters, the operational and developer user experiences are further enhanced. The following sections will go over some of the commercial capabilities that should be considered as value added when migrating applications to Tanzu Application Platform.
-
-### Configuring external access
-
-Tanzu Application Platform includes Contour ingress controller. You can define an ingress to expose your [API Gateway](./guides-tap-exposing-traffic-contour.html) externally from the cluster.
-
 ## Migrating existing applications
 
-This document outlines a way to integrate Spring Cloud Data Flow (SCDF) with 
+This document outlines a way to integrate Spring Cloud Data Flow (SCDF) with
 Tanzu Application Platform (TAP). We cover how to add a few TAP resources that will provide integration, allowing you to deploy streams using a custom TAP Workload and then view the applications making up the SCDF stream in TAP's Developer Portal.
 
 <p class="note important">
